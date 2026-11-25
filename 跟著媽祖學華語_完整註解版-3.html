@@ -1,562 +1,4491 @@
 <!DOCTYPE html>
 <!-- HTML5 文件宣告：告訴瀏覽器使用現代 HTML 標準。 -->
+
 <html lang="zh-Hant">
-<!-- lang 指定網頁主要語言為繁體中文，方便搜尋引擎及螢幕閱讀器。 -->
+<!-- lang 指定網頁主要語言為繁體中文。 -->
+
 <head>
-  <!-- head 儲存網頁資訊、樣式及瀏覽器設定，不是主要可見內容。 -->
-  <meta charset="UTF-8"><!-- UTF-8 可正確呈現繁體中文。 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- 配合手機螢幕寬度縮放。 -->
-  <meta name="description" content="《跟著媽祖學華語》以白沙屯媽祖進香文化為核心，結合華語教材、在地文化與多模態學習的專題成果展示網站。"><!-- 搜尋引擎摘要。 -->
-  <meta name="theme-color" content="#29231f"><!-- 行動瀏覽器的主題色。 -->
-  <title>跟著媽祖學華語｜文化與語言的旅程</title><!-- 瀏覽器分頁標題。 -->
+
+  <!-- ========================================
+       網站基本設定
+       ======================================== -->
+
+  <meta charset="UTF-8">
+  <!-- UTF-8 可以正確顯示繁體中文。 -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 讓網站可以依照手機、平板及電腦螢幕調整大小。 -->
+
+  <meta name="description" content="《跟著媽祖學華語》以白沙屯媽祖進香文化為核心，結合華語教材、在地文化與多模態學習的專題成果展示網站。">
+  <!-- 搜尋引擎顯示的網站簡介。 -->
+
+  <meta name="theme-color" content="#29231f">
+  <!-- 手機瀏覽器的主題顏色。 -->
+
+  <title>跟著媽祖學華語｜文化與語言的旅程</title>
+  <!-- 修改這裡可以改變瀏覽器分頁標題。 -->
+
+
   <style>
-    /* style 中為 CSS：控制顏色、字型、尺寸、版面及手機排版。 */
-    :root { /* 全站共用的 CSS 自訂變數；var(--名稱) 可以取用。 */
-      --ink: #2b2521; /* 主要文字的深棕色。 */
-      --muted: #766b61; /* 次要文字的灰棕色。 */
-      --paper: #f5f0e7; /* 主背景米白色。 */
-      --paper-deep: #e9dfd0; /* 較深的紙張色。 */
-      --red: #963f32; /* 主題紅色。 */
-      --red-dark: #6e2e27; /* 深紅色，供互動狀態使用。 */
-      --gold: #b58b50; /* 金色點綴。 */
-      --line: rgba(64, 48, 37, .16); /* 半透明分隔線顏色。 */
-      --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif; /* 標題字型候選清單。 */
-      --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; /* 正文字型候選清單。 */
-      --shadow: 0 18px 55px rgba(43, 31, 22, .12); /* 共用柔和陰影。 */
+
+    /* ========================================
+       CSS 01：全站顏色及字體設定
+       修改這裡可以統一改變整個網站的風格。
+       ======================================== */
+
+    :root {
+
+      --ink: #2b2521;          /* 主要文字顏色：深棕色 */
+      --muted: #766b61;        /* 次要文字顏色：灰棕色 */
+      --paper: #f5f0e7;        /* 網站主要背景：米白色 */
+      --paper-deep: #e9dfd0;   /* 較深的米白色 */
+      --red: #963f32;          /* 網站主題色：暗紅色 */
+      --red-dark: #6e2e27;     /* 按鈕滑入時的深紅色 */
+      --gold: #b58b50;         /* 裝飾線及金色文字 */
+      --line: rgba(64,48,37,.16); /* 半透明分隔線 */
+
+      /* 標題使用宋體，營造文化及紀實風格。 */
+      --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+
+      /* 正文使用黑體，提高閱讀清晰度。 */
+      --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+
+      /* 全站共用陰影。 */
+      --shadow: 0 18px 55px rgba(43,31,22,.12);
+
     }
-    * { box-sizing: border-box; } /* 寬高計算包含內距及邊框，便於排版。 */
-    html { scroll-behavior: smooth; scroll-padding-top: 82px; } /* 點擊錨點平滑捲動，並避開固定導覽列。 */
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.8; } /* 全站基本外觀。 */
-    a { color: inherit; text-decoration: none; } /* 連結沿用父元素文字色，移除底線。 */
-    button, input { font: inherit; } /* 按鈕和輸入框繼承字型。 */
-    img, video { max-width: 100%; display: block; } /* 媒體不超出容器，並避免行內元素底部空隙。 */
-    .topbar { /* 固定在畫面頂端的導覽列。 */
-      position: fixed; inset: 0 0 auto; z-index: 20; height: 72px; /* 固定頂端、高 72px，圖層高於一般內容。 */
-      display: flex; align-items: center; justify-content: space-between; /* 品牌靠左，選單靠右，垂直置中。 */
-      padding: 0 clamp(20px, 5vw, 76px); color: #f7f0e6; /* 左右留白隨螢幕寬度變化。 */
-      background: rgba(39, 33, 29, .94); backdrop-filter: blur(14px); /* 深色半透明毛玻璃背景。 */
-      border-bottom: 1px solid rgba(255,255,255,.1); /* 淡色底部分隔線。 */
+
+    * {
+      box-sizing: border-box;
+      /* 寬度與高度計算包含內距及邊框。 */
     }
-    .brand { display: flex; align-items: center; gap: 12px; min-width: 210px; } /* 網站標誌和名稱水平排列。 */
-    .brand-mark { width: 34px; height: 34px; border: 1px solid var(--gold); color: #e6c48e; display:grid; place-items:center; font-family:var(--serif); font-size:19px; transform:rotate(45deg); } /* 旋轉方形標誌。 */
-    .brand-mark span { transform:rotate(-45deg); } /* 讓標誌中的「媽」字保持正向。 */
-    .brand-name { font-family:var(--serif); font-size:17px; letter-spacing:.12em; } /* 中文品牌名稱。 */
-    .brand-en { display:block; color:#c9b9a6; font:9px var(--sans); letter-spacing:.22em; margin-top:-3px; } /* 英文副標題。 */
-    .nav { display:flex; align-items:center; gap:clamp(13px, 2.3vw, 32px); font-size:12px; letter-spacing:.08em; } /* 桌面導覽連結水平排列。 */
-    .nav a { color:#e8ded2; opacity:.84; transition:.2s; } /* 導覽連結基本狀態及動畫。 */
-    .nav a:hover, .nav a.active { color:#e5bd7e; opacity:1; } /* 滑鼠移入或目前區段時以金色標示。 */
-    .menu-toggle { display:none; background:none; border:1px solid rgba(255,255,255,.35); color:#fff; padding:6px 11px; cursor:pointer; } /* 手機選單按鈕，桌面預設隱藏。 */
-    .hero { min-height: 780px; height: min(100svh, 940px); position:relative; overflow:hidden; display:flex; align-items:flex-end; color:#fff; background:#29231f; } /* 首頁主視覺，接近一整個螢幕高度。 */
-    /* 輪播容器：填滿 Hero，放在標題文字後方。 */
-    .hero-slides { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 70% 35%,#8b5940,#29231f 65%); }
-    /* 每張照片重疊放置；只有 active 的照片可見。 */
-    .hero-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 42%; opacity:0; transition:opacity 1s ease; }
-    .hero-slide.active { opacity:1; }
-    /* 固定暗色遮罩，避免背景照片太亮而看不清文字。 */
-    .hero-overlay { position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(90deg,rgba(28,23,20,.88),rgba(28,23,20,.56) 48%,rgba(28,23,20,.12)),linear-gradient(0deg,rgba(28,23,20,.68),transparent 55%); }
-    /* 輪播操作區放在主視覺下方中央，避開原本左右兩側標語。 */
-    .hero-controls { position:absolute; z-index:3; bottom:32px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:16px; }
-    .hero-arrow { width:36px; height:36px; border:1px solid rgba(255,255,255,.65); border-radius:50%; color:#fff; background:rgba(30,24,20,.35); cursor:pointer; }
-    .hero-arrow:hover, .hero-arrow:focus-visible { background:var(--red); }
-    .hero-dots { display:flex; align-items:center; gap:9px; }
-    .hero-dot { width:9px; height:9px; border-radius:50%; padding:0; border:1px solid #fff; background:transparent; cursor:pointer; }
-    .hero-dot.active { background:#e4c18b; border-color:#e4c18b; }
-    /* 尊重系統減少動畫的設定。 */
-    @media (prefers-reduced-motion:reduce) { .hero-slide { transition:none; } }
-    .hero-inner { position:relative; z-index:1; width:min(1180px, 100%); margin:0 auto; padding:150px 32px 100px; } /* 主視覺文字容器。 */
-    .eyebrow { display:flex; align-items:center; gap:14px; color:#dfbf8d; font-size:11px; letter-spacing:.25em; text-transform:uppercase; } /* 標題上方的英文小字。 */
-    .eyebrow:before { content:""; width:42px; height:1px; background:var(--gold); } /* 英文小字前方的裝飾線。 */
-    h1 { font:clamp(48px, 7.5vw, 100px)/1.18 var(--serif); letter-spacing:.08em; font-weight:500; margin:27px 0 20px; } /* 首頁最大標題。 */
-    h1 span { display:block; color:#e4c18b; font-size:.42em; letter-spacing:.22em; margin-top:12px; } /* 主標題下方的金色副標。 */
-    .hero-copy { max-width:540px; color:#e5dbd0; font-size:15px; letter-spacing:.06em; } /* 主視覺介紹文字。 */
-    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-top:34px; } /* 按鈕並排，空間不足時換行。 */
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:12px; padding:12px 22px; border:1px solid var(--gold); color:#f7eddf; font-size:12px; letter-spacing:.12em; transition:.25s; cursor:pointer; background:transparent; } /* 共用按鈕樣式。 */
-    .btn.primary { background:var(--red); border-color:var(--red); } /* 主要行動按鈕採紅色背景。 */
-    .btn:hover { background:var(--gold); color:#211b17; border-color:var(--gold); transform:translateY(-2px); } /* 滑入按鈕時變金色並上移。 */
-    .hero-note { position:absolute; right:clamp(24px,5vw,76px); bottom:44px; color:#d6c6b5; writing-mode:vertical-rl; font-size:10px; letter-spacing:.22em; } /* 右下角直排文字。 */
-    .hero-index { position:absolute; left:clamp(24px,5vw,76px); bottom:42px; color:#d6c6b5; font:11px var(--sans); letter-spacing:.2em; } /* 左下角專題年份。 */
-    .section { padding:110px 24px; } /* 每個主要章節的上下留白。 */
-    .container { width:min(1120px,100%); margin:0 auto; } /* 內容最大寬度及水平置中。 */
-    .section-kicker { color:var(--red); font-size:11px; letter-spacing:.24em; text-transform:uppercase; } /* 章節編號與英文標籤。 */
-    .section-title { font:clamp(32px,4vw,54px)/1.35 var(--serif); letter-spacing:.07em; font-weight:500; margin:13px 0 18px; } /* 章節大標題。 */
-    .section-lead { max-width:680px; color:var(--muted); font-size:14px; } /* 章節導言文字。 */
-    .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; } /* 專題理念區左右各一欄。 */
-    .intro-art { min-height:420px; position:relative; background:#ded1bf; overflow:hidden; } /* 專題理念照片框。 */
-    .intro-art img { width:100%; height:420px; object-fit:cover; } /* 照片裁切填滿框。 */
-    .image-placeholder { min-height:100%; display:grid; place-items:center; text-align:center; padding:35px; color:#746253; background:linear-gradient(135deg,#e7d9c6,#cdb99f); } /* 照片缺失時的提示畫面。 */
-    .image-placeholder strong { display:block; font:28px var(--serif); letter-spacing:.12em; } /* 佔位區主標。 */
-    .image-placeholder small { display:block; margin-top:8px; font-size:11px; } /* 佔位區補充文字。 */
-    .art-caption { position:absolute; right:0; bottom:0; background:var(--red); color:#fff; padding:12px 18px; font-size:10px; letter-spacing:.12em; } /* 照片右下角紅色地名標籤。 */
-    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:42px; border:1px solid var(--line); } /* 文化、語言、媒介三欄摘要。 */
-    .stat { background:var(--paper); padding:20px 18px; } /* 單個摘要格。 */
-    .stat b { display:block; font:30px var(--serif); color:var(--red); } /* 摘要大字。 */
-    .stat span { font-size:11px; color:var(--muted); letter-spacing:.08em; } /* 摘要說明。 */
-    .dark-section { background:#29231f; color:#f4eadc; } /* 深色章節背景。 */
-    .dark-section .section-kicker { color:#d9b77e; } /* 深色章節的小標改金色。 */
-    .dark-section .section-lead { color:#c9bdb0; } /* 深色章節導言改淺色。 */
-    .dark-section .section-title { color:#f4eadc; } /* 深色章節大標改淺色。 */
-    .timeline { margin-top:55px; display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid rgba(225,194,148,.45); } /* 四階段製作歷程時間軸。 */
-    .timeline-item { padding:24px 22px 10px 0; position:relative; } /* 每個歷程步驟。 */
-    .timeline-item:before { content:""; position:absolute; width:9px; height:9px; border-radius:50%; background:#d9b77e; top:-5px; left:0; } /* 時間軸節點圓點。 */
-    .timeline-no { color:#d9b77e; font:12px var(--sans); letter-spacing:.18em; } /* STEP 編號。 */
-    .timeline-item h3 { font:22px var(--serif); font-weight:500; margin:14px 0 8px; } /* 步驟名稱。 */
-    .timeline-item p { color:#c9bdb0; font-size:12px; margin:0; } /* 步驟說明。 */
-    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:45px; } /* 三欄卡片網格。 */
-    .card { background:#fffaf2; border:1px solid var(--line); transition:.25s; } /* 卡片背景、邊框及動畫。 */
-    .card:hover { transform:translateY(-5px); box-shadow:var(--shadow); } /* 滑入時卡片浮起。 */
-    .card-media { height:210px; background:#e1d3c0; overflow:hidden; } /* 卡片圖片區。 */
-    .card-media img { width:100%; height:100%; object-fit:cover; transition:.5s; } /* 卡片圖片填滿區域。 */
-    .card:hover .card-media img { transform:scale(1.04); } /* 滑入時圖片微幅放大。 */
-    .card-body { padding:22px; } /* 卡片文字內距。 */
-    .card-tag { color:var(--red); font-size:10px; letter-spacing:.16em; } /* 卡片分類標籤。 */
-    .card h3 { font:23px var(--serif); font-weight:500; margin:8px 0; } /* 卡片標題。 */
-    .card p { color:var(--muted); font-size:12px; margin:0 0 16px; } /* 卡片描述。 */
-    .text-link { display:inline-flex; align-items:center; gap:10px; color:var(--red); font-size:11px; letter-spacing:.12em; border-bottom:1px solid #caa99c; padding-bottom:4px; cursor:pointer; background:none; border-top:0; border-left:0; border-right:0; } /* 帶底線的文字連結。 */
-    .text-link:hover { color:var(--red-dark); } /* 連結滑入時變深紅。 */
-    .book-layout { display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; align-items:center; margin-top:45px; } /* 電子書封面與介紹左右排列。 */
-    .book-cover { width:min(310px,100%); margin:auto; aspect-ratio:3/4; background:linear-gradient(150deg,#7d352b,#3b2822); color:#f4e5ca; padding:28px; box-shadow:18px 20px 0 #d8c8b2, var(--shadow); display:flex; flex-direction:column; justify-content:space-between; text-align:center; border:7px double rgba(224,190,132,.65); } /* 使用 CSS 製作示意書封。 */
-    .book-cover .cover-small { font-size:10px; letter-spacing:.24em; } /* 封面上方小字。 */
-    .book-cover .cover-title { font:38px/1.5 var(--serif); letter-spacing:.13em; } /* 封面書名。 */
-    .book-cover .cover-sub { font-size:11px; letter-spacing:.12em; } /* 封面副標。 */
-    .book-cover .cover-seal { align-self:center; border:1px solid #d7b57b; padding:8px 12px; font:19px var(--serif); color:#e5c58e; } /* 封面媽祖印章造型。 */
-    .book-info h3 { font:30px var(--serif); font-weight:500; margin:0 0 15px; } /* 電子書介紹標題。 */
-    .feature-list { list-style:none; padding:0; margin:25px 0; display:grid; gap:12px; } /* 取消原生清單符號，改為自訂樣式。 */
-    .feature-list li { display:flex; gap:13px; color:var(--muted); font-size:13px; } /* 清單每一項。 */
-    .feature-list li:before { content:"✦"; color:var(--gold); } /* 每項前方加入金色星形。 */
-    .unit-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:36px; } /* 教材三個單元並排。 */
-    .unit { background:#eee5d8; padding:22px; border:1px solid var(--line); } /* 單元資訊框。 */
-    .unit small { color:var(--red); letter-spacing:.15em; font-size:10px; } /* UNIT 編號。 */
-    .unit h4 { font:20px var(--serif); margin:8px 0; font-weight:500; } /* 單元名稱。 */
-    .unit p { color:var(--muted); font-size:12px; margin:0; } /* 單元內容。 */
-    .media-panel { background:#e9dfd0; padding:38px; margin-top:40px; } /* 多模態學習面板。 */
-    .media-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:22px; } /* 左側影片較寬，右側三個媒體介紹較窄。 */
-    .video-box { background:#29231f; aspect-ratio:16/9; display:grid; place-items:center; color:#dfc69e; text-align:center; padding:20px; } /* 16:9 影片區。 */
-    .video-box video { width:100%; height:100%; object-fit:contain; } /* 影片完整顯示不裁切。 */
-    .video-box .play-symbol { font-size:38px; display:block; } /* 影片尚未載入時的播放圖示。 */
-    .media-side { display:grid; gap:14px; } /* 右側媒體項目垂直排列。 */
-    .media-tile { background:#f7f1e8; padding:20px; display:flex; align-items:center; gap:16px; } /* 單個媒體說明卡。 */
-    .media-icon { width:42px; height:42px; flex:0 0 42px; display:grid; place-items:center; background:var(--red); color:white; font-size:18px; } /* 媒體圖示方塊。 */
-    .media-tile b { display:block; font:17px var(--serif); } /* 媒體類型名稱。 */
-    .media-tile span { display:block; color:var(--muted); font-size:11px; } /* 媒體學習說明。 */
-    .gallery-tools { display:flex; justify-content:space-between; align-items:center; gap:15px; margin:38px 0 18px; flex-wrap:wrap; } /* 圖片分類按鈕列。 */
-    .filter-group { display:flex; gap:8px; flex-wrap:wrap; } /* 分類按鈕橫向排列。 */
-    .filter-btn { border:1px solid var(--line); color:var(--muted); padding:7px 14px; background:transparent; font-size:11px; cursor:pointer; } /* 分類按鈕基本樣式。 */
-    .filter-btn.active, .filter-btn:hover { background:var(--red); color:white; border-color:var(--red); } /* 選取或滑入時紅底白字。 */
-    .gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; } /* 相簿三欄網格。 */
-    .gallery-item { position:relative; aspect-ratio:4/3; background:#ddd0bd; overflow:hidden; cursor:pointer; } /* 單張相簿照片框。 */
-    .gallery-item img { width:100%; height:100%; object-fit:cover; transition:.4s; } /* 照片填滿框並支援動畫。 */
-    .gallery-item:hover img { transform:scale(1.06); } /* 滑入照片時放大。 */
-    .gallery-item .gallery-placeholder { height:100%; display:grid; place-items:center; color:#746253; font:18px var(--serif); background:linear-gradient(135deg,#e8ddce,#cbb79d); } /* 照片缺失時的文字佔位畫面。 */
-    .gallery-item figcaption { position:absolute; inset:auto 0 0; color:#fff; background:linear-gradient(transparent,rgba(0,0,0,.72)); padding:32px 14px 12px; font-size:11px; letter-spacing:.08em; } /* 照片底部漸層文字標籤。 */
-    .gallery-item[hidden] { display:none; } /* 被 JS 篩選隱藏的相簿項目不顯示。 */
-    .feedback-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:40px; } /* 兩欄教學回饋。 */
-    .quote { padding:30px; border:1px solid var(--line); background:#fffaf2; } /* 回饋文字卡。 */
-    .quote-mark { color:var(--gold); font:45px var(--serif); line-height:1; } /* 大型引號裝飾。 */
-    .quote p { color:#5f554c; font:17px/1.9 var(--serif); } /* 回饋正文。 */
-    .quote small { color:var(--muted); font-size:11px; } /* 回饋來源說明。 */
-    .cta { background:var(--red); color:#fff4e6; padding:60px 30px; text-align:center; } /* 頁尾前的紅色行動呼籲區。 */
-    .cta h2 { font:clamp(28px,4vw,44px) var(--serif); font-weight:500; letter-spacing:.1em; margin:0 0 12px; } /* 行動呼籲標題。 */
-    .cta p { color:#f0d9c9; font-size:13px; margin:0 auto 24px; max-width:620px; } /* 行動呼籲說明。 */
-    footer { background:#211c19; color:#c6b9aa; padding:35px 24px; } /* 全站頁尾。 */
-    .footer-inner { width:min(1120px,100%); margin:auto; display:flex; justify-content:space-between; gap:25px; align-items:center; flex-wrap:wrap; } /* 頁尾內容橫向排列。 */
-    footer strong { color:#f0e4d4; font:19px var(--serif); letter-spacing:.1em; } /* 頁尾品牌名稱。 */
-    footer small { font-size:10px; letter-spacing:.08em; } /* 頁尾小字。 */
-    .modal { position:fixed; inset:0; z-index:50; background:rgba(18,15,13,.88); display:none; align-items:center; justify-content:center; padding:25px; } /* 圖片放大遮罩，預設不顯示。 */
-    .modal.open { display:flex; } /* JS 加入 open 後顯示遮罩。 */
-    .modal-content { max-width:min(900px,100%); max-height:90vh; position:relative; } /* 放大圖片容器。 */
-    .modal-content img { max-height:82vh; width:auto; margin:auto; object-fit:contain; } /* 放大圖片不超過視窗高度。 */
-    .modal-close { position:absolute; top:-42px; right:0; color:#fff; background:none; border:1px solid rgba(255,255,255,.5); padding:5px 12px; cursor:pointer; } /* 遮罩關閉按鈕。 */
-    .modal-caption { color:#eee; text-align:center; font-size:12px; padding-top:10px; } /* 放大圖片下方說明。 */
-    .back-top { position:fixed; right:22px; bottom:22px; z-index:15; width:42px; height:42px; border:1px solid var(--gold); background:#29231f; color:#f4e7d4; cursor:pointer; display:none; } /* 回頂端按鈕預設隱藏。 */
-    .back-top.show { display:block; } /* 捲動一定距離後由 JS 顯示。 */
-    .notice { background:#f1e5d6; color:#6c5545; border-left:3px solid var(--gold); padding:13px 16px; font-size:11px; margin-top:20px; } /* 檔案設定提示框。 */
-    @media (max-width:850px) { /* 螢幕寬度 850px 以下：平板及較小裝置。 */
-      .nav { display:none; position:absolute; top:72px; left:0; right:0; background:#29231f; padding:20px 26px 25px; flex-direction:column; align-items:flex-start; gap:15px; border-top:1px solid rgba(255,255,255,.1); } /* 導覽列改成隱藏的垂直選單。 */
-      .nav.open { display:flex; } /* 點擊手機選單時顯示。 */
-      .menu-toggle { display:block; } /* 顯示手機選單按鈕。 */
-      .brand { min-width:0; } /* 取消品牌最小寬度限制。 */
-      .intro-grid, .book-layout { grid-template-columns:1fr; gap:38px; } /* 雙欄改單欄。 */
-      .intro-art, .intro-art img { min-height:300px; height:300px; } /* 縮短介紹照片高度。 */
-      .cards { grid-template-columns:repeat(2,1fr); } /* 卡片改兩欄。 */
-      .timeline { grid-template-columns:repeat(2,1fr); row-gap:25px; } /* 時間軸改兩欄。 */
-      .media-grid { grid-template-columns:1fr; } /* 多媒體區改單欄。 */
+
+    html {
+      scroll-behavior: smooth;
+      /* 點擊導覽連結時平滑捲動。 */
+
+      scroll-padding-top: 82px;
+      /* 避免章節標題被固定導覽列遮住。 */
     }
-    @media (max-width:560px) { /* 螢幕寬度 560px 以下：手機版。 */
-      .topbar { height:64px; padding:0 17px; } /* 手機導覽列變矮。 */
-      .nav { top:64px; } /* 下拉選單緊接手機導覽列。 */
-      .brand-name { font-size:15px; } /* 縮小品牌字。 */
-      .hero { min-height:690px; height:88svh; } /* 手機主視覺高度。 */
-      .hero-inner { padding:120px 24px 105px; } /* 手機主視覺內距。 */
-      .hero-slide { object-position:58% center; } /* 手機版調整照片焦點。 */
-      .hero-copy { font-size:13px; } /* 手機介紹文字縮小。 */
-      .section { padding:78px 20px; } /* 手機章節留白縮小。 */
-      .stats { grid-template-columns:1fr; } /* 三項摘要改直排。 */
-      .stat { padding:13px 18px; } /* 摘要格縮小內距。 */
-      .cards, .unit-grid, .gallery, .feedback-grid { grid-template-columns:1fr; } /* 卡片、單元、相簿及回饋改單欄。 */
-      .card-media { height:220px; } /* 手機卡片照片高度。 */
-      .timeline { grid-template-columns:1fr 1fr; } /* 手機時間軸仍保留兩欄。 */
-      .timeline-item { padding-right:12px; } /* 減少時間軸右側留白。 */
-      .media-panel { padding:18px; } /* 多媒體面板縮小內距。 */
-      .hero-note { right:15px; } /* 直排文字更靠右。 */
-      .hero-index { left:20px; } /* 年份標籤更靠左。 */
-      .book-cover { width:245px; } /* 手機書封縮小。 */
-      .book-cover .cover-title { font-size:31px; } /* 手機書名縮小。 */
-      .footer-inner { align-items:flex-start; flex-direction:column; } /* 頁尾資訊改直排。 */
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.8;
     }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      /* 移除超連結預設的底線。 */
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    img, video {
+      max-width: 100%;
+      display: block;
+      /* 避免圖片及影片超出容器。 */
+    }
+
+
+    /* ========================================
+       CSS 02：固定導覽列
+       ======================================== */
+
+    .topbar {
+
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+
+      height: 72px;
+      /* 導覽列高度。 */
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 clamp(20px,5vw,76px);
+
+      color: #f7f0e6;
+
+      background: rgba(39,33,29,.94);
+      /* 導覽列深色半透明背景。 */
+
+      backdrop-filter: blur(14px);
+      /* 毛玻璃效果。 */
+
+      border-bottom: 1px solid rgba(255,255,255,.1);
+
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 210px;
+    }
+
+    /* 左上角菱形標誌。 */
+    .brand-mark {
+
+      width: 34px;
+      height: 34px;
+
+      border: 1px solid var(--gold);
+      color: #e6c48e;
+
+      display: grid;
+      place-items: center;
+
+      font-family: var(--serif);
+      font-size: 19px;
+
+      transform: rotate(45deg);
+
+    }
+
+    /* 讓菱形標誌內的文字保持正向。 */
+    .brand-mark span {
+      transform: rotate(-45deg);
+    }
+
+    .brand-name {
+      font-family: var(--serif);
+      font-size: 17px;
+      letter-spacing: .12em;
+    }
+
+    .brand-en {
+      display: block;
+      color: #c9b9a6;
+      font: 9px var(--sans);
+      letter-spacing: .22em;
+      margin-top: -3px;
+    }
+
+    /* 桌面版導覽選單。 */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(13px,2.3vw,32px);
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    .nav a {
+      color: #e8ded2;
+      opacity: .84;
+      transition: .2s;
+    }
+
+    /* 滑鼠移入及目前所在章節的顏色。 */
+    .nav a:hover,
+    .nav a.active {
+      color: #e5bd7e;
+      opacity: 1;
+    }
+
+    /* 手機選單按鈕，桌面版預設隱藏。 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,.35);
+      color: white;
+      padding: 6px 11px;
+      cursor: pointer;
+    }
+
+
+    /* ========================================
+       CSS 03：首頁主視覺 HERO
+       ======================================== */
+
+    .hero {
+
+      min-height: 820px;
+      /* 首頁最小高度，可自行調整。 */
+
+      height: min(100svh,940px);
+
+      position: relative;
+      overflow: hidden;
+
+      display: flex;
+      align-items: flex-end;
+
+      color: white;
+      background: #29231f;
+
+    }
+
+    /* 首頁背景圖片輪播容器。 */
+    .hero-slides {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+
+      background: radial-gradient(
+        circle at 70% 35%,
+        #8b5940,
+        #29231f 65%
+      );
+    }
+
+    /* 每張輪播照片的尺寸及淡入淡出動畫。 */
+    .hero-slide {
+
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      object-position: center 42%;
+      /* 修改百分比可以調整圖片顯示位置。 */
+
+      opacity: 0;
+
+      transition: opacity 1s ease;
+      /* 圖片切換動畫時間：1 秒。 */
+
+    }
+
+    /* 只有目前選中的照片會顯示。 */
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    /* 照片上的深色漸層遮罩，避免文字看不清楚。 */
+    .hero-overlay {
+
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(28,23,20,.88),
+          rgba(28,23,20,.56) 48%,
+          rgba(28,23,20,.12)
+        ),
+        linear-gradient(
+          0deg,
+          rgba(28,23,20,.68),
+          transparent 55%
+        );
+
+    }
+
+    /* 首頁標題與介紹文字容器。 */
+    .hero-inner {
+
+      position: relative;
+      z-index: 1;
+
+      width: min(1180px,100%);
+      margin: 0 auto;
+
+      padding: 150px 32px 155px;
+      /* 上方、左右、下方的留白。 */
+
+    }
+
+    /* 主標題上方的英文小字。 */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #dfbf8d;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+
+    /* 英文小字前方的金色裝飾線。 */
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* 首頁最大標題。 */
+    h1 {
+
+      font: clamp(48px,7.5vw,100px)/1.18 var(--serif);
+      /* 最小48px、最大100px，依螢幕調整。 */
+
+      letter-spacing: .08em;
+      font-weight: 500;
+      margin: 27px 0 20px;
+
+    }
+
+    /* 首頁金色副標題。 */
+    h1 span {
+      display: block;
+      color: #e4c18b;
+      font-size: .42em;
+      letter-spacing: .22em;
+      margin-top: 12px;
+    }
+
+    /* 首頁簡短介紹文字。 */
+    .hero-copy {
+      max-width: 540px;
+      color: #e5dbd0;
+      font-size: 15px;
+      letter-spacing: .06em;
+    }
+
+    /* 首頁按鈕排列方式。 */
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    /* 全站共用按鈕。 */
+    .btn {
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 12px;
+      padding: 12px 22px;
+
+      border: 1px solid var(--gold);
+
+      color: #f7eddf;
+      font-size: 12px;
+      letter-spacing: .12em;
+
+      transition: .25s;
+      cursor: pointer;
+      background: transparent;
+
+    }
+
+    /* 紅色主要按鈕。 */
+    .btn.primary {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    /* 米白背景上的按鈕使用深色文字。 */
+    .section .btn:not(.primary) {
+      color: var(--red);
+    }
+
+    /* 滑鼠移入按鈕時變成金色。 */
+    .btn:hover {
+      background: var(--gold);
+      color: #211b17;
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+
+    /* ========================================
+       CSS 04：首頁新增的淡入動畫
+       ======================================== */
+
+    @keyframes heroFadeUp {
+
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+        /* 動畫開始時，文字位於下方且透明。 */
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        /* 動畫結束時，文字回到原位。 */
+      }
+
+    }
+
+    /* 以下數值控制各個文字出現的時間。 */
+
+    .hero-inner .eyebrow {
+      animation: heroFadeUp 1s ease both;
+    }
+
+    .hero-inner h1 {
+      animation: heroFadeUp 1.2s .2s ease both;
+    }
+
+    .hero-inner .hero-copy {
+      animation: heroFadeUp 1.2s .4s ease both;
+    }
+
+    .hero-inner .hero-actions {
+      animation: heroFadeUp 1.2s .6s ease both;
+    }
+
+
+    /* ========================================
+       CSS 05：學校與專題團隊資訊
+       ======================================== */
+
+    .hero-team {
+
+      margin-top: 26px;
+
+      padding-left: 14px;
+      border-left: 2px solid var(--gold);
+      /* 左側金色裝飾線。 */
+
+      color: #dfc9ae;
+      font-size: 12px;
+      letter-spacing: .12em;
+      line-height: 1.9;
+
+      animation: heroFadeUp 1.2s .8s ease both;
+
+    }
+
+
+    /* ========================================
+       CSS 06：首頁圖片輪播控制按鈕
+       ======================================== */
+
+    .hero-controls {
+
+      position: absolute;
+      z-index: 3;
+
+      bottom: 78px;
+      /* 距離首頁底部的高度。 */
+
+      left: 50%;
+      transform: translateX(-50%);
+
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+    }
+
+    /* 左右切換照片的圓形箭頭。 */
+    .hero-arrow {
+
+      width: 36px;
+      height: 36px;
+
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 50%;
+
+      color: white;
+      background: rgba(30,24,20,.35);
+      cursor: pointer;
+
+    }
+
+    .hero-arrow:hover,
+    .hero-arrow:focus-visible {
+      background: var(--red);
+    }
+
+    /* 輪播圓點容器。 */
+    .hero-dots {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* 單個輪播圓點。 */
+    .hero-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      padding: 0;
+      border: 1px solid white;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* 目前顯示照片的圓點。 */
+    .hero-dot.active {
+      background: #e4c18b;
+      border-color: #e4c18b;
+    }
+
+    /* 首頁右下角直排文字。 */
+    .hero-note {
+      position: absolute;
+      right: clamp(24px,5vw,76px);
+      bottom: 44px;
+      color: #d6c6b5;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      letter-spacing: .22em;
+    }
+
+    /* 首頁左下角專題年份。 */
+    .hero-index {
+      position: absolute;
+      left: clamp(24px,5vw,76px);
+      bottom: 42px;
+      color: #d6c6b5;
+      font: 11px var(--sans);
+      letter-spacing: .2em;
+    }
+
+
+    /* ========================================
+       CSS 07：向下捲動提示
+       ======================================== */
+
+    .scroll-guide {
+
+      position: absolute;
+
+      bottom: 12px;
+      left: 50%;
+
+      transform: translateX(-50%);
+      z-index: 5;
+
+      color: #e4c18b;
+      text-align: center;
+
+      font-size: 10px;
+      letter-spacing: .2em;
+
+    }
+
+    /* 向下箭頭的大小及動畫速度。 */
+    .scroll-guide span {
+      display: block;
+      font-size: 22px;
+      animation: scrollBounce 1.8s infinite;
+    }
+
+    /* 箭頭上下移動動畫。 */
+    @keyframes scrollBounce {
+
+      0%,100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(6px);
+      }
+
+    }
+
+
+    /* ========================================
+       CSS 08：各章節共用排版
+       ======================================== */
+
+    .section {
+      padding: 110px 24px;
+      /* 各章節上下及左右留白。 */
+    }
+
+    .container {
+      width: min(1120px,100%);
+      margin: 0 auto;
+      /* 內容最大寬度1120px，並水平置中。 */
+    }
+
+    .section-kicker {
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font: clamp(32px,4vw,54px)/1.35 var(--serif);
+      letter-spacing: .07em;
+      font-weight: 500;
+      margin: 13px 0 18px;
+    }
+
+    .section-lead {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+
+    /* ========================================
+       CSS 09：專題簡介
+       左文右圖的雙欄排版。
+       ======================================== */
+
+    .intro-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+      /* 左右各占一半。 */
+
+      gap: 65px;
+      /* 文字與圖片之間的距離。 */
+
+      align-items: center;
+
+    }
+
+    #about .section-lead {
+      font-size: 16px;
+      line-height: 2.1;
+    }
+
+    /* 專題簡介右側圖片框。 */
+    .intro-art {
+
+      min-height: 420px;
+
+      position: relative;
+      background: #ded1bf;
+      overflow: hidden;
+
+      box-shadow: 16px 16px 0 #e1d3bf;
+      /* 圖片右下方的米色裝飾。 */
+
+    }
+
+    .intro-art img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+    }
+
+    /* 圖片尚未放入時的備用提示畫面。 */
+    .image-placeholder {
+
+      min-height: 100%;
+
+      display: grid;
+      place-items: center;
+
+      text-align: center;
+      padding: 35px;
+      color: #746253;
+
+      background: linear-gradient(
+        135deg,
+        #e7d9c6,
+        #cdb99f
+      );
+
+    }
+
+    .image-placeholder strong {
+      display: block;
+      font: 28px var(--serif);
+      letter-spacing: .12em;
+    }
+
+    .image-placeholder small {
+      display: block;
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    /* 照片右下角紅色地名標籤。 */
+    .art-caption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background: var(--red);
+      color: white;
+      padding: 12px 18px;
+      font-size: 10px;
+      letter-spacing: .12em;
+    }
+
+    /* 文化、語言、多模態三大核心。 */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1px;
+      background: var(--line);
+      margin-top: 42px;
+      border: 1px solid var(--line);
+    }
+
+    .stat {
+      background: var(--paper);
+      padding: 20px 18px;
+    }
+
+    .stat b {
+      display: block;
+      font: 30px var(--serif);
+      color: var(--red);
+    }
+
+    .stat span {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .08em;
+    }
+
+
+    /* ========================================
+       CSS 10：深色章節共用樣式
+       ======================================== */
+
+    .dark-section {
+      background: #29231f;
+      color: #f4eadc;
+    }
+
+    .dark-section .section-kicker {
+      color: #d9b77e;
+    }
+
+    .dark-section .section-lead {
+      color: #c9bdb0;
+    }
+
+    .dark-section .section-title {
+      color: #f4eadc;
+    }
+
+
+    /* ========================================
+       CSS 11：製作歷程
+       左右交錯的垂直照片時間軸。
+       ======================================== */
+
+    .journey-timeline {
+      position: relative;
+      margin-top: 65px;
+    }
+
+    /* 時間軸中央的金色直線。 */
+    .journey-timeline::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      bottom: 0;
+      left: 50%;
+
+      width: 1px;
+      background: var(--gold);
+
+    }
+
+    /* 每個製作歷程項目的排版。 */
+    .journey-row {
+
+      position: relative;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      align-items: center;
+
+      gap: 80px;
+      margin-bottom: 70px;
+
+    }
+
+    .journey-row:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 時間軸上的金色圓點。 */
+    .journey-row::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      width: 12px;
+      height: 12px;
+
+      border-radius: 50%;
+
+      background: #d9b77e;
+
+      transform: translate(-50%,-50%);
+
+      box-shadow: 0 0 0 7px #29231f;
+
+    }
+
+    /* 偶數項目的照片放到右側。 */
+    .journey-row:nth-child(even) .journey-photo {
+      order: 2;
+    }
+
+    /* 偶數項目的文字放到左側。 */
+    .journey-row:nth-child(even) .journey-text {
+      order: 1;
+      text-align: right;
+    }
+
+    /* 製作歷程照片框。 */
+    .journey-photo {
+
+      position: relative;
+
+      height: 290px;
+      /* 修改這裡可以改變歷程照片高度。 */
+
+      overflow: hidden;
+      background: #42382e;
+
+      border: 1px solid rgba(181,139,80,.4);
+
+      display: grid;
+      place-items: center;
+
+    }
+
+    .journey-photo img {
+
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: transform .6s ease;
+
+    }
+
+    /* 滑鼠移入照片時稍微放大。 */
+    .journey-photo:hover img {
+      transform: scale(1.05);
+    }
+
+    /* 尚未放入照片時顯示的文字。 */
+    .journey-placeholder {
+      color: #c9b9a6;
+      font-size: 13px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* STEP 編號。 */
+    .journey-text small {
+      color: #d9b77e;
+      letter-spacing: .2em;
+    }
+
+    /* 製作歷程標題。 */
+    .journey-text h3 {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 500;
+      margin: 12px 0;
+    }
+
+    /* 製作歷程說明文字。 */
+    .journey-text p {
+      color: #c9bdb0;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    /* 捲動進場動畫：尚未進入畫面。 */
+    .journey-row.waiting {
+
+      opacity: 0;
+
+      transform: translateY(30px);
+
+      transition:
+        opacity .9s ease,
+        transform .9s ease;
+
+    }
+
+    /* 捲動進場動畫：進入畫面後顯示。 */
+    .journey-row.waiting.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* ========================================
+       CSS 12：文化探索卡片
+       ======================================== */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+      margin-top: 45px;
+    }
+
+    .card {
+      background: #fffaf2;
+      border: 1px solid var(--line);
+      transition: .25s;
+    }
+
+    /* 滑鼠移入卡片時浮起。 */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-media {
+      height: 210px;
+      background: #e1d3c0;
+      overflow: hidden;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .5s;
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.04);
+    }
+
+    .card-body {
+      padding: 22px;
+    }
+
+    .card-tag {
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: .16em;
+    }
+
+    .card h3 {
+      font: 23px var(--serif);
+      font-weight: 500;
+      margin: 8px 0;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 16px;
+    }
+
+    /* 帶有底線的文字連結。 */
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: .12em;
+      border-bottom: 1px solid #caa99c;
+      padding-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .text-link:hover {
+      color: var(--red-dark);
+    }
+
+
+    /* ========================================
+       CSS 13：教材導覽及電子書
+       ======================================== */
+
+    .book-layout {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 70px;
+      align-items: center;
+      margin-top: 45px;
+    }
+
+    /* 使用 CSS 製作的示意教材封面。 */
+    .book-cover {
+
+      width: min(310px,100%);
+      margin: auto;
+
+      aspect-ratio: 3/4;
+      /* 教材封面寬高比例。 */
+
+      background: linear-gradient(
+        150deg,
+        #7d352b,
+        #3b2822
+      );
+
+      color: #f4e5ca;
+      padding: 28px;
+
+      box-shadow:
+        18px 20px 0 #d8c8b2,
+        var(--shadow);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      text-align: center;
+
+      border: 7px double rgba(224,190,132,.65);
+
+    }
+
+    .book-cover .cover-small {
+      font-size: 10px;
+      letter-spacing: .24em;
+    }
+
+    .book-cover .cover-title {
+      font: 38px/1.5 var(--serif);
+      letter-spacing: .13em;
+    }
+
+    .book-cover .cover-sub {
+      font-size: 11px;
+      letter-spacing: .12em;
+    }
+
+    .book-cover .cover-seal {
+      align-self: center;
+      border: 1px solid #d7b57b;
+      padding: 8px 12px;
+      font: 19px var(--serif);
+      color: #e5c58e;
+    }
+
+    /* 教材右側介紹。 */
+    .book-info h3 {
+      font: 30px var(--serif);
+      font-weight: 500;
+      margin: 0 0 15px;
+    }
+
+    /* 教材特色清單。 */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 13px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* 清單前方的金色星形符號。 */
+    .feature-list li::before {
+      content: "✦";
+      color: var(--gold);
+    }
+
+    /* 教材單元卡片。 */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .unit {
+      background: #eee5d8;
+      padding: 22px;
+      border: 1px solid var(--line);
+    }
+
+    .unit small {
+      color: var(--red);
+      letter-spacing: .15em;
+      font-size: 10px;
+    }
+
+    .unit h4 {
+      font: 20px var(--serif);
+      margin: 8px 0;
+      font-weight: 500;
+    }
+
+    .unit p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+    }
+
+
+    /* ========================================
+       CSS 14：互動式進香文化地圖
+       採用復古紙張及文化路線示意設計。
+       ======================================== */
+
+    .pilgrimage-map {
+
+      display: grid;
+
+      grid-template-columns: .9fr 1.1fr;
+      /* 左側路線區較窄，右側介紹區較寬。 */
+
+      gap: 35px;
+
+      margin-top: 45px;
+      padding: 35px;
+
+      background: #e6d8c3;
+      border: 1px solid #c6ad88;
+
+    }
+
+    /* 左側復古紙張路線區。 */
+    .map-route {
+
+      position: relative;
+
+      min-height: 460px;
+
+      padding: 30px 20px;
+
+      background: radial-gradient(
+        ellipse at center,
+        #f7edd9,
+        #dfc9a8
+      );
+
+      border: 1px solid #c6ad88;
+
+    }
+
+    /* 地圖上方標題。 */
+    .map-route-title {
+      text-align: center;
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--red);
+      letter-spacing: .15em;
+      margin-bottom: 25px;
+    }
+
+    /* 文化節點排列容器。 */
+    .map-stops {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      padding-left: 30px;
+    }
+
+    /* 文化節點之間的金色虛線。 */
+    .map-stops::before {
+
+      content: "";
+
+      position: absolute;
+
+      left: 12px;
+      top: 20px;
+      bottom: 20px;
+
+      border-left: 2px dashed var(--gold);
+
+    }
+
+    /* 每個可以點擊的文化節點。 */
+    .map-stop {
+
+      position: relative;
+
+      width: 100%;
+      text-align: left;
+
+      background: rgba(255,255,255,.3);
+      border: 1px solid #c9b18e;
+
+      color: var(--red-dark);
+
+      padding: 12px 16px;
+
+      cursor: pointer;
+      font-size: 14px;
+
+      transition: .3s;
+
+    }
+
+    /* 節點左側的紅色圓點。 */
+    .map-stop::before {
+
+      content: "";
+
+      position: absolute;
+
+      left: -25px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      width: 12px;
+      height: 12px;
+
+      background: var(--red);
+
+      border: 2px solid #f7edd9;
+      border-radius: 50%;
+
+    }
+
+    /* 選取節點時的紅色背景。 */
+    .map-stop:hover,
+    .map-stop.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    /* 右側文化內容展示區。 */
+    .map-detail {
+      background: #fffaf2;
+      padding: 25px;
+      border: 1px solid #c6ad88;
+    }
+
+    /* 文化介紹照片框。 */
+    .map-photo-box {
+
+      position: relative;
+
+      height: 250px;
+
+      background: #ded1bf;
+      overflow: hidden;
+
+      display: grid;
+      place-items: center;
+
+    }
+
+    .map-photo-box img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 圖片尚未上傳時的提示文字。 */
+    .map-photo-box span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* 文化節點標題。 */
+    .map-detail h3 {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--red);
+      margin: 18px 0 10px;
+    }
+
+    /* 文化節點介紹文字。 */
+    .map-detail p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    /* 華語詞彙區。 */
+    .map-vocabulary {
+      border-top: 1px solid #d6c4ac;
+      padding-top: 16px;
+      margin-top: 20px;
+    }
+
+    .map-vocabulary strong {
+      color: var(--red);
+      font-size: 12px;
+      letter-spacing: .15em;
+    }
+
+    .map-vocabulary p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    /* 地圖下方的示意說明。 */
+    .map-notice {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 15px;
+    }
+
+
+    /* ========================================
+       CSS 15：多模態學習
+       ======================================== */
+
+    .media-panel {
+      background: #e9dfd0;
+      padding: 38px;
+      margin-top: 40px;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+    }
+
+    /* 影片播放區，比例16:9。 */
+    .video-box {
+
+      background: #29231f;
+
+      aspect-ratio: 16/9;
+
+      display: grid;
+      place-items: center;
+
+      color: #dfc69e;
+      text-align: center;
+      padding: 20px;
+
+    }
+
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .video-box .play-symbol {
+      font-size: 38px;
+      display: block;
+    }
+
+    /* 影片右側的媒體介紹。 */
+    .media-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .media-tile {
+      background: #f7f1e8;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .media-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      background: var(--red);
+      color: white;
+      font-size: 18px;
+    }
+
+    .media-tile b {
+      display: block;
+      font: 17px var(--serif);
+    }
+
+    .media-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    /* ========================================
+       CSS 16：田野相簿及照片分類
+       ======================================== */
+
+    .gallery-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin: 38px 0 18px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 照片分類按鈕。 */
+    .filter-btn {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: 7px 14px;
+      background: transparent;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--red);
+      color: white;
+      border-color: var(--red);
+    }
+
+    /* 相簿採用三欄排列。 */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+    }
+
+    /* 單張照片框。 */
+    .gallery-item {
+
+      position: relative;
+
+      margin: 0;
+
+      aspect-ratio: 4/3;
+
+      background: #ddd0bd;
+      overflow: hidden;
+      cursor: pointer;
+
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .4s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    /* 照片尚未上傳時的預留畫面。 */
+    .gallery-placeholder {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: #746253;
+      font: 18px var(--serif);
+      background: linear-gradient(
+        135deg,
+        #e8ddce,
+        #cbb79d
+      );
+    }
+
+    /* 照片下方的漸層文字標籤。 */
+    .gallery-item figcaption {
+      position: absolute;
+      inset: auto 0 0;
+      color: white;
+      background: linear-gradient(
+        transparent,
+        rgba(0,0,0,.72)
+      );
+      padding: 32px 14px 12px;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+
+    /* 被分類功能隱藏的照片。 */
+    .gallery-item[hidden] {
+      display: none;
+    }
+
+
+    /* ========================================
+       CSS 17：教學成果及回饋
+       ======================================== */
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 40px;
+    }
+
+    .quote {
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: #fffaf2;
+    }
+
+    /* 大型金色引號。 */
+    .quote-mark {
+      color: var(--gold);
+      font: 45px var(--serif);
+      line-height: 1;
+    }
+
+    .quote p {
+      color: #5f554c;
+      font: 17px/1.9 var(--serif);
+    }
+
+    .quote small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    /* ========================================
+       CSS 18：網站結尾及頁尾
+       ======================================== */
+
+    .cta {
+      background: var(--red);
+      color: #fff4e6;
+      padding: 60px 30px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font: clamp(28px,4vw,44px) var(--serif);
+      font-weight: 500;
+      letter-spacing: .1em;
+      margin: 0 0 12px;
+    }
+
+    .cta p {
+      color: #f0d9c9;
+      font-size: 13px;
+      margin: 0 auto 24px;
+      max-width: 620px;
+    }
+
+    footer {
+      background: #211c19;
+      color: #c6b9aa;
+      padding: 35px 24px;
+    }
+
+    .footer-inner {
+      width: min(1120px,100%);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    footer strong {
+      color: #f0e4d4;
+      font: 19px var(--serif);
+      letter-spacing: .1em;
+    }
+
+    footer small {
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+
+    /* ========================================
+       CSS 19：照片放大視窗
+       ======================================== */
+
+    .modal {
+
+      position: fixed;
+      inset: 0;
+
+      z-index: 50;
+
+      background: rgba(18,15,13,.88);
+
+      display: none;
+      /* 預設隱藏照片放大視窗。 */
+
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+
+    }
+
+    /* JavaScript 加入 open 後顯示視窗。 */
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: min(900px,100%);
+      max-height: 90vh;
+      position: relative;
+    }
+
+    .modal-content img {
+      max-height: 82vh;
+      width: auto;
+      margin: auto;
+      object-fit: contain;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -42px;
+      right: 0;
+      color: white;
+      background: none;
+      border: 1px solid rgba(255,255,255,.5);
+      padding: 5px 12px;
+      cursor: pointer;
+    }
+
+    .modal-caption {
+      color: #eee;
+      text-align: center;
+      font-size: 12px;
+      padding-top: 10px;
+    }
+
+
+    /* ========================================
+       CSS 20：返回頂端按鈕及提示框
+       ======================================== */
+
+    .back-top {
+
+      position: fixed;
+
+      right: 22px;
+      bottom: 22px;
+
+      z-index: 15;
+
+      width: 42px;
+      height: 42px;
+
+      border: 1px solid var(--gold);
+
+      background: #29231f;
+      color: #f4e7d4;
+
+      cursor: pointer;
+      display: none;
+
+    }
+
+    /* 捲動一定距離後顯示按鈕。 */
+    .back-top.show {
+      display: block;
+    }
+
+    /* 網站檔案設定提示框。 */
+    .notice {
+      background: #f1e5d6;
+      color: #6c5545;
+      border-left: 3px solid var(--gold);
+      padding: 13px 16px;
+      font-size: 11px;
+      margin-top: 20px;
+    }
+
+
+    /* ========================================
+       CSS 21：平板及手機響應式排版
+       螢幕寬度850px以下使用此設定。
+       ======================================== */
+
+    @media (max-width: 850px) {
+
+      /* 桌面導覽列改成下拉式選單。 */
+      .nav {
+
+        display: none;
+
+        position: absolute;
+
+        top: 72px;
+        left: 0;
+        right: 0;
+
+        background: #29231f;
+
+        padding: 20px 26px 25px;
+
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 15px;
+
+        border-top: 1px solid rgba(255,255,255,.1);
+
+      }
+
+      .nav.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      /* 專題簡介及教材介紹改成單欄。 */
+      .intro-grid,
+      .book-layout {
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
+
+      .intro-art,
+      .intro-art img {
+        min-height: 300px;
+        height: 300px;
+      }
+
+      /* 卡片改為兩欄。 */
+      .cards {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      /* 製作歷程改成單欄時間軸。 */
+      .journey-row {
+
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+        padding-left: 30px;
+        margin-bottom: 45px;
+
+      }
+
+      /* 時間軸移到左側。 */
+      .journey-timeline::before {
+        left: 0;
+      }
+
+      .journey-row::before {
+        left: 0;
+        top: 25px;
+      }
+
+      /* 取消左右交錯排列。 */
+      .journey-row:nth-child(even) .journey-photo {
+        order: 0;
+      }
+
+      .journey-row:nth-child(even) .journey-text {
+        order: 0;
+        text-align: left;
+      }
+
+      /* 互動地圖改成上下排列。 */
+      .pilgrimage-map {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+    /* ========================================
+       CSS 22：手機版
+       螢幕寬度560px以下使用此設定。
+       ======================================== */
+
+    @media (max-width: 560px) {
+
+      .topbar {
+        height: 64px;
+        padding: 0 17px;
+      }
+
+      .nav {
+        top: 64px;
+      }
+
+      .brand-name {
+        font-size: 15px;
+      }
+
+      /* 手機首頁高度。 */
+      .hero {
+        min-height: 820px;
+        height: auto;
+      }
+
+      .hero-inner {
+        padding: 120px 24px 160px;
+      }
+
+      .hero-slide {
+        object-position: 58% center;
+      }
+
+      .hero-copy {
+        font-size: 13px;
+      }
+
+      .hero-team {
+        font-size: 11px;
+      }
+
+      .section {
+        padding: 78px 20px;
+      }
+
+      /* 三大核心改成直排。 */
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        padding: 13px 18px;
+      }
+
+      /* 手機版卡片及相簿改成單欄。 */
+      .cards,
+      .unit-grid,
+      .gallery,
+      .feedback-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-media {
+        height: 220px;
+      }
+
+      .journey-photo {
+        height: 220px;
+      }
+
+      .journey-text h3 {
+        font-size: 25px;
+      }
+
+      .media-panel {
+        padding: 18px;
+      }
+
+      .hero-note {
+        right: 15px;
+      }
+
+      .hero-index {
+        left: 20px;
+      }
+
+      .book-cover {
+        width: 245px;
+      }
+
+      .book-cover .cover-title {
+        font-size: 31px;
+      }
+
+      .pilgrimage-map {
+        padding: 12px;
+      }
+
+      .map-photo-box {
+        height: 200px;
+      }
+
+      .map-detail {
+        padding: 18px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+    }
+
+
+    /* ========================================
+       CSS 23：無障礙動畫設定
+       尊重使用者系統的減少動畫設定。
+       ======================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .hero-slide {
+        transition: none;
+      }
+
+      .hero-inner *,
+      .scroll-guide span {
+        animation: none !important;
+      }
+
+      .journey-row.waiting {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+    }
+
   </style>
+
 </head>
-<body><!-- body 是瀏覽器真正顯示的網頁內容。 -->
-  <!-- 固定導覽列：品牌標誌、手機選單按鈕與章節連結。 -->
+
+
+<body>
+
+  <!-- ========================================
+       HTML 01：固定導覽列
+       href="#名稱" 對應下方章節的 id。
+       ======================================== -->
+
   <header class="topbar">
-    <a class="brand" href="#home" aria-label="回到首頁"><!-- #home 連到 id="home" 的區段。 -->
-      <div class="brand-mark"><span>媽</span></div><!-- 菱形品牌標誌。 -->
-      <div><div class="brand-name">跟著媽祖學華語</div><span class="brand-en">MAZU CULTURE × CHINESE LEARNING</span></div><!-- 中英文網站名稱。 -->
+
+    <!-- 點擊左上角品牌標誌可以返回首頁。 -->
+    <a class="brand" href="#home" aria-label="回到首頁">
+
+      <div class="brand-mark">
+        <span>媽</span>
+      </div>
+
+      <div>
+
+        <!-- 網站中文名稱。 -->
+        <div class="brand-name">
+          跟著媽祖學華語
+        </div>
+
+        <!-- 網站英文名稱。 -->
+        <span class="brand-en">
+          MAZU CULTURE × CHINESE LEARNING
+        </span>
+
+      </div>
+
     </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="開啟導覽選單" aria-expanded="false">選單 ☰</button><!-- 手機版選單開關，JS 會切換 aria-expanded。 -->
-    <nav class="nav" id="mainNav"><!-- 導覽列：每個 href 對應頁面中的區段 id。 -->
-      <a href="#about">專題理念</a><a href="#process">製作歷程</a><a href="#textbook">教材導覽</a>
-      <a href="#culture">文化探索</a><a href="#multimedia">多模態學習</a><a href="#achievement">教學成果</a>
+
+    <!-- 手機及平板版選單按鈕。 -->
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="開啟導覽選單"
+      aria-expanded="false"
+    >
+      選單 ☰
+    </button>
+
+    <!-- 修改下方文字可以更改導覽列名稱。 -->
+    <nav class="nav" id="mainNav">
+
+      <a href="#about">專題理念</a>
+
+      <a href="#process">製作歷程</a>
+
+      <a href="#textbook">教材導覽</a>
+
+      <a href="#culture">文化探索</a>
+
+      <a href="#multimedia">多模態學習</a>
+
+      <a href="#achievement">教學成果</a>
+
     </nav>
+
   </header>
-  <main><!-- main 包含本頁主要內容。 -->
-    <!-- 01：首頁主視覺。 -->
+
+
+  <main>
+
+
+    <!-- ========================================
+         HTML 02：首頁主視覺
+         修改首頁照片、標題及團隊名稱的位置。
+         ======================================== -->
+
     <section class="hero" id="home">
-      <!-- 三張主視覺圖片：更換 src 路徑即可替換照片。 -->
-      <div class="hero-slides" id="heroSlides" aria-label="白沙屯媽祖進香照片輪播">
-        <img class="hero-slide active" src="IMG_7665.jpg"alt="白沙屯媽祖進香照片一" fetchpriority="high">
-        <img class="hero-slide" src="IMG_7678.jpg" alt="白沙屯媽祖進香照片二" loading="lazy">
-        <img class="hero-slide" src="IMG_7830.jpg" alt="白沙屯媽祖進香照片三" loading="lazy">
+
+      <!-- 首頁輪播照片。
+           目前三張照片都放在index.html同一層。
+           更換src即可更換照片。 -->
+
+      <div
+        class="hero-slides"
+        id="heroSlides"
+        aria-label="白沙屯媽祖進香照片輪播"
+      >
+
+        <!-- 第一張照片：預設顯示。 -->
+        <img
+          class="hero-slide active"
+          src="IMG_7665.jpg"
+          alt="白沙屯媽祖進香照片一"
+          fetchpriority="high"
+        >
+
+        <!-- 第二張照片。 -->
+        <img
+          class="hero-slide"
+          src="IMG_7678.jpg"
+          alt="白沙屯媽祖進香照片二"
+        >
+
+        <!-- 第三張照片。 -->
+        <img
+          class="hero-slide"
+          src="IMG_7830.jpg"
+          alt="白沙屯媽祖進香照片三"
+        >
+
       </div>
-      <!-- 遮罩讓前方白色標題清楚可讀。 -->
+
+      <!-- 深色遮罩，讓首頁文字清楚顯示。 -->
       <div class="hero-overlay" aria-hidden="true"></div>
+
+
       <div class="hero-inner">
-        <div class="eyebrow">LOCAL CULTURE · CHINESE LANGUAGE</div><!-- 英文小標。 -->
-        <h1>跟著媽祖<br>學華語<span>從語言出發，走進臺灣文化</span></h1><!-- br 強制換行；span 用於副標樣式。 -->
-        <p class="hero-copy">以白沙屯媽祖進香文化為起點，將在地故事轉化為華語學習素材。<br>透過文字、影像、聲音與實地紀錄，讓語言學習連結真實的文化經驗。</p><!-- 首頁簡介。 -->
-        <div class="hero-actions"><!-- 首頁的兩個跳轉按鈕。 -->
-          <a class="btn primary" href="#textbook">探索教材 <span>↗</span></a>
-          <a class="btn" href="#about">認識本專題 <span>＋</span></a>
+
+        <!-- 首頁英文小標。 -->
+        <div class="eyebrow">
+          LOCAL CULTURE · CHINESE LANGUAGE
         </div>
+
+        <!-- 首頁主標題。
+             br表示換行，span為金色副標題。 -->
+
+        <h1>
+
+          跟著媽祖<br>
+
+          學華語
+
+          <span>
+            從語言出發，走進臺灣文化
+          </span>
+
+        </h1>
+
+        <!-- 首頁簡短介紹文字。 -->
+        <p class="hero-copy">
+
+          一場進香，一段文化與語言的旅程。
+
+        </p>
+
+        <!-- 首頁兩個跳轉按鈕。 -->
+        <div class="hero-actions">
+
+          <a class="btn primary" href="#textbook">
+            探索教材 <span>↗</span>
+          </a>
+
+          <a class="btn" href="#about">
+            認識本專題 <span>＋</span>
+          </a>
+
+        </div>
+
+        <!-- 新增：學校及專題團隊名稱。
+             直接修改下方文字即可。 -->
+
+        <div class="hero-team">
+
+          國立聯合大學・華語文學系<br>
+
+          《跟著媽祖學華語》專題製作團隊
+
+        </div>
+
       </div>
-      <!-- 左右箭頭與圓點按鈕，供使用者手動選擇照片。 -->
-      <div class="hero-controls" aria-label="主視覺輪播控制">
-        <button class="hero-arrow" id="heroPrev" type="button" aria-label="上一張照片">❮</button>
-        <div class="hero-dots" id="heroDots" aria-label="選擇輪播照片"></div>
-        <button class="hero-arrow" id="heroNext" type="button" aria-label="下一張照片">❯</button>
+
+
+      <!-- 首頁照片輪播控制按鈕。 -->
+      <div
+        class="hero-controls"
+        aria-label="主視覺輪播控制"
+      >
+
+        <button
+          class="hero-arrow"
+          id="heroPrev"
+          type="button"
+          aria-label="上一張照片"
+        >
+          ❮
+        </button>
+
+        <!-- 圓點由JavaScript自動產生。 -->
+        <div
+          class="hero-dots"
+          id="heroDots"
+          aria-label="選擇輪播照片"
+        ></div>
+
+        <button
+          class="hero-arrow"
+          id="heroNext"
+          type="button"
+          aria-label="下一張照片"
+        >
+          ❯
+        </button>
+
       </div>
-      <div class="hero-index">2026/4~2026/12</div><!-- 左下角年份。 -->
-      <div class="hero-note">跟著學最道地的華語</div><!-- 右下角直排標語。 -->
+
+
+      <!-- 新增：向下捲動動畫提示。
+           點擊後前往專題簡介。 -->
+
+      <a
+        class="scroll-guide"
+        href="#about"
+        aria-label="向下瀏覽專題簡介"
+      >
+
+        SCROLL DOWN
+
+        <span>↓</span>
+
+      </a>
+
+
+      <!-- 首頁左下角專題日期。 -->
+      <div class="hero-index">
+        2026/4~2026/12
+      </div>
+
+      <!-- 首頁右下角直排標語。 -->
+      <div class="hero-note">
+        跟著學最道地的華語
+      </div>
+
     </section>
-    <!-- 02：專題理念與三大核心。 -->
+
+
+    <!-- ========================================
+         HTML 03：專題簡介
+         左側文字，右側田野照片。
+         ======================================== -->
+
     <section class="section" id="about">
-      <div class="container intro-grid"><!-- 左右雙欄：左文字、右圖片。 -->
+
+      <div class="container intro-grid">
+
+        <!-- 左側文字介紹。 -->
         <div>
-          <div class="section-kicker">01 / ABOUT THE PROJECT</div>
-          <h2 class="section-title">讓在地文化<br>成為華語教室的一部分。</h2>
-          <p class="section-lead">《跟著媽祖學華語》以白沙屯媽祖進香為主題，嘗試將臺灣在地信仰、生活文化與華語教學結合，發展具有地方特色的文化教材。網站延伸教材內容，整理專題製作紀錄與多模態學習資源，提供學習者及教學者參考。</p>
-          <div class="stats"><!-- 三個專題核心項目。 -->
-            <div class="stat"><b>文化</b><span>在地信仰與生活脈絡</span></div>
-            <div class="stat"><b>語言</b><span>詞彙、課文與溝通應用</span></div>
-            <div class="stat"><b>媒介</b><span>文字、圖片、影音整合</span></div>
+
+          <!-- 章節編號及英文小標。 -->
+          <div class="section-kicker">
+            01 / ABOUT THE PROJECT
           </div>
+
+          <!-- 專題簡介標題。 -->
+          <h2 class="section-title">
+
+            讓在地文化<br>
+
+            走進華語教室。
+
+          </h2>
+
+          <!-- 專題簡介正文，可直接修改。 -->
+          <p class="section-lead">
+
+            《跟著媽祖學華語》以白沙屯媽祖進香為主題，結合田野調查、在地文化與多模態學習，將真實的文化經驗轉化為華語教材。
+
+          </p>
+
+          <!-- 專題三大核心。 -->
+          <div class="stats">
+
+            <div class="stat">
+
+              <b>文化</b>
+
+              <span>
+                認識臺灣在地信仰
+              </span>
+
+            </div>
+
+            <div class="stat">
+
+              <b>語言</b>
+
+              <span>
+                在真實情境中學習華語
+              </span>
+
+            </div>
+
+            <div class="stat">
+
+              <b>多模態</b>
+
+              <span>
+                結合文字、影像與聲音
+              </span>
+
+            </div>
+
+          </div>
+
         </div>
-        <div class="intro-art"><!-- 右側實景照片，圖片不存在時改顯示提示。 -->
-          <img src="images/about-baishatun.jpg" alt="白沙屯在地文化照片" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><!-- onerror 是圖片載入失敗時執行的 JS。 -->
-          <div class="image-placeholder" style="display:none"><div><strong>白沙屯・文化現場</strong><small>請將團隊實際拍攝的白沙屯照片放入 images/about-baishatun.jpg</small></div></div><!-- 備用提示。 -->
-          <div class="art-caption">BAISHATUN · MIAOLI, TAIWAN</div><!-- 照片右下角標籤。 -->
+
+
+        <!-- 右側專題簡介照片。
+             修改src即可替換照片。 -->
+
+        <div class="intro-art">
+
+          <img
+            src="images/about-baishatun.jpg"
+            alt="白沙屯在地文化照片"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+          >
+
+          <!-- 如果圖片不存在，顯示下方提示。 -->
+          <div
+            class="image-placeholder"
+            style="display:none"
+          >
+
+            <div>
+
+              <strong>
+                白沙屯・文化現場
+              </strong>
+
+              <small>
+                請放入 images/about-baishatun.jpg
+              </small>
+
+            </div>
+
+          </div>
+
+          <!-- 照片右下角標籤。 -->
+          <div class="art-caption">
+            BAISHATUN · MIAOLI, TAIWAN
+          </div>
+
         </div>
+
       </div>
+
     </section>
-    <!-- 03：專題製作歷程。 -->
-    <section class="section dark-section" id="process">
+
+
+    <!-- ========================================
+         HTML 04：製作歷程
+         新版左右交錯照片時間軸。
+         ======================================== -->
+
+    <section
+      class="section dark-section"
+      id="process"
+    >
+
       <div class="container">
-        <div class="section-kicker">02 / PROJECT JOURNEY</div>
-        <h2 class="section-title">從發想到實踐，<br>一步步完成文化教材。</h2>
-        <p class="section-lead">專題歷程包含主題發想、資料蒐集、文化踏查、教材編寫與課程試教。以下為可依實際進度補充日期、照片及成果的歷程架構。</p>
-        <div class="timeline"><!-- 四階段時間軸。 -->
-          <div class="timeline-item"><span class="timeline-no">STEP 01</span><h3>主題發想</h3><p>確立白沙屯媽祖進香作為在地文化教材主題，討論學習對象與設計方向。</p></div>
-          <div class="timeline-item"><span class="timeline-no">STEP 02</span><h3>資料蒐集與踏查</h3><p>整理媽祖信仰、進香文化及地方資料，蒐集現場影像與文化素材。</p></div>
-          <div class="timeline-item"><span class="timeline-no">STEP 03</span><h3>教材編寫與設計</h3><p>編寫課文、生詞、語法及練習，結合圖像與多媒體內容。</p></div>
-          <div class="timeline-item"><span class="timeline-no">STEP 04</span><h3>課程試教與修正</h3><p>進行教學實踐，參考學生反應及教師回饋調整教材與教學活動。</p></div>
+
+        <div class="section-kicker">
+          02 / PROJECT JOURNEY
         </div>
+
+        <h2 class="section-title">
+
+          從發想到實踐，<br>
+
+          我們的製作旅程。
+
+        </h2>
+
+        <p class="section-lead">
+
+          從文化踏查、教材編寫到課堂實踐，記錄專題的每一個階段。
+
+        </p>
+
+
+        <!-- 垂直時間軸容器。 -->
+        <div class="journey-timeline">
+
+
+          <!-- STEP 01：主題發想。
+               照片在左，文字在右。 -->
+
+          <article class="journey-row">
+
+            <div class="journey-photo">
+
+              <!-- 照片尚未放入時顯示。 -->
+              <div class="journey-placeholder">
+
+                主題發想照片<br>
+
+                images/process-01.jpg
+
+              </div>
+
+              <!-- 修改src更換主題發想照片。 -->
+              <img
+                src="images/process-01.jpg"
+                alt="專題主題發想"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="journey-text">
+
+              <small>STEP 01</small>
+
+              <h3>主題發想</h3>
+
+              <p>
+
+                確立白沙屯媽祖進香作為文化教材主題，思考如何將臺灣在地文化融入華語教學。
+
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- STEP 02：資料蒐集與踏查。
+               CSS自動將照片移到右側。 -->
+
+          <article class="journey-row">
+
+            <div class="journey-photo">
+
+              <div class="journey-placeholder">
+
+                田野調查照片<br>
+
+                images/process-02.jpg
+
+              </div>
+
+              <!-- 修改src更換田野照片。 -->
+              <img
+                src="images/process-02.jpg"
+                alt="資料蒐集與田野踏查"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="journey-text">
+
+              <small>STEP 02</small>
+
+              <h3>資料蒐集與踏查</h3>
+
+              <p>
+
+                走進白沙屯媽祖進香現場，透過田野觀察、照片與影像紀錄，蒐集真實文化素材。
+
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- STEP 03：教材編寫與設計。 -->
+
+          <article class="journey-row">
+
+            <div class="journey-photo">
+
+              <div class="journey-placeholder">
+
+                教材編寫照片<br>
+
+                images/process-03.jpg
+
+              </div>
+
+              <!-- 修改src更換教材製作照片。 -->
+              <img
+                src="images/process-03.jpg"
+                alt="教材編寫與設計"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="journey-text">
+
+              <small>STEP 03</small>
+
+              <h3>教材編寫與設計</h3>
+
+              <p>
+
+                將文化素材轉化為課文、生詞、語法與學習活動，結合多模態媒介進行教材設計。
+
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- STEP 04：課程試教與修正。 -->
+
+          <article class="journey-row">
+
+            <div class="journey-photo">
+
+              <div class="journey-placeholder">
+
+                課程試教照片<br>
+
+                images/process-04.jpg
+
+              </div>
+
+              <!-- 修改src更換試教照片。 -->
+              <img
+                src="images/process-04.jpg"
+                alt="課程試教與教材修正"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="journey-text">
+
+              <small>STEP 04</small>
+
+              <h3>課程試教與修正</h3>
+
+              <p>
+
+                透過課堂教學、學習者反應與回饋，檢視教材內容並持續調整。
+
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
       </div>
+
     </section>
-    <!-- 04：教材介紹、PDF 按鈕與單元。 -->
+
+
+    <!-- ========================================
+         HTML 05：教材導覽
+         包含教材封面、介紹、PDF及單元。
+         ======================================== -->
+
     <section class="section" id="textbook">
+
       <div class="container">
-        <div class="section-kicker">03 / TEXTBOOK</div>
-        <h2 class="section-title">教材導覽</h2>
-        <p class="section-lead">從文化情境出發，透過課文與語言任務，引導學習者理解臺灣信仰文化，並將新學到的華語運用於溝通情境。</p>
-        <div class="book-layout"><!-- 左側書封、右側書籍介紹。 -->
-          <div class="book-cover" aria-label="跟著媽祖學華語電子書封面示意"><!-- 這是 CSS 製作的示意封面，非圖片檔。 -->
-            <div class="cover-small">TAIWAN LOCAL CULTURE</div>
-            <div class="cover-title">跟著媽祖<br>學華語</div>
-            <div class="cover-seal">媽祖</div>
-            <div class="cover-sub">走進白沙屯・認識臺灣文化</div>
+
+        <div class="section-kicker">
+          03 / TEXTBOOK
+        </div>
+
+        <h2 class="section-title">
+          教材導覽
+        </h2>
+
+        <p class="section-lead">
+
+          從文化情境出發，透過課文與語言任務，引導學習者理解臺灣信仰文化，並將新學到的華語運用於溝通情境。
+
+        </p>
+
+
+        <div class="book-layout">
+
+          <!-- 左側CSS示意教材封面。
+               未來可以替換成正式教材封面圖片。 -->
+
+          <div
+            class="book-cover"
+            aria-label="跟著媽祖學華語電子書封面示意"
+          >
+
+            <div class="cover-small">
+              TAIWAN LOCAL CULTURE
+            </div>
+
+            <div class="cover-title">
+
+              跟著媽祖<br>
+
+              學華語
+
+            </div>
+
+            <div class="cover-seal">
+              媽祖
+            </div>
+
+            <div class="cover-sub">
+              走進白沙屯・認識臺灣文化
+            </div>
+
           </div>
+
+
+          <!-- 右側教材介紹。 -->
           <div class="book-info">
+
             <h3>《跟著媽祖學華語》</h3>
-            <p class="section-lead">本教材以白沙屯媽祖信仰及進香活動為文化主軸，將文化知識與華語學習目標結合。可在此放入正式電子書、單元資訊及延伸學習檔案。</p>
-            <ul class="feature-list"><!-- ul 為無序清單，li 為每個項目。 -->
-              <li>文化主題：媽祖信仰、進香活動與地方文化。</li>
-              <li>語言學習：主題詞彙、課文理解、句型及情境應用。</li>
-              <li>學習活動：閱讀理解、詞語練習、文化觀察與口語表達。</li>
-              <li>多模態資源：搭配照片、影片、音訊及線上延伸素材。</li>
+
+            <p class="section-lead">
+
+              本教材以白沙屯媽祖信仰及進香活動為文化主軸，將文化知識與華語學習目標結合。可在此放入正式電子書、單元資訊及延伸學習檔案。
+
+            </p>
+
+            <!-- 教材特色。 -->
+            <ul class="feature-list">
+
+              <li>
+                文化主題：媽祖信仰、進香活動與地方文化。
+              </li>
+
+              <li>
+                語言學習：主題詞彙、課文理解、句型及情境應用。
+              </li>
+
+              <li>
+                學習活動：閱讀理解、詞語練習、文化觀察與口語表達。
+              </li>
+
+              <li>
+                多模態資源：搭配照片、影片、音訊及線上延伸素材。
+              </li>
+
             </ul>
+
+            <!-- 教材PDF及單元跳轉按鈕。 -->
             <div class="hero-actions">
-              <a class="btn primary" href="documents/textbook.pdf" target="_blank" rel="noopener">開啟電子書 ↗</a><!-- target 開新分頁；rel 增加安全性。 -->
-              <a class="btn" href="#units">瀏覽單元 ↓</a><!-- 跳至下方 id="units"。 -->
+
+              <!-- 修改href可以更換教材PDF。
+                   target="_blank"代表開啟新分頁。 -->
+
+              <a
+                class="btn primary"
+                href="documents/textbook.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                開啟電子書 ↗
+              </a>
+
+              <a class="btn" href="#units">
+                瀏覽單元 ↓
+              </a>
+
             </div>
-            <div class="notice">請將正式電子書 PDF 放入 documents 資料夾，檔名設為 textbook.pdf。若尚未放入，按鈕將無法開啟檔案。</div>
+
+            <!-- 尚未放入PDF時的設定提示。 -->
+            <div class="notice">
+
+              請將正式電子書PDF放入documents資料夾，檔名設為textbook.pdf。
+
+            </div>
+
           </div>
+
         </div>
-        <div id="units" class="unit-grid"><!-- 三個教材單元，目前是示意內容。 -->
-          <article class="unit"><small>UNIT 01</small><h4>認識媽祖</h4><p>從媽祖的故事與信仰背景，認識臺灣民間信仰。</p></article>
-          <article class="unit"><small>UNIT 02</small><h4>白沙屯進香</h4><p>認識進香活動、徒步路程及重要文化特色。</p></article>
-          <article class="unit"><small>UNIT 03</small><h4>走讀在地文化</h4><p>連結白沙屯地方景點、交通與生活文化。</p></article>
+
+
+        <!-- 教材單元示意。
+             可依正式教材課次修改。 -->
+
+        <div id="units" class="unit-grid">
+
+          <article class="unit">
+
+            <small>UNIT 01</small>
+
+            <h4>認識媽祖</h4>
+
+            <p>
+              從媽祖的故事與信仰背景，認識臺灣民間信仰。
+            </p>
+
+          </article>
+
+          <article class="unit">
+
+            <small>UNIT 02</small>
+
+            <h4>白沙屯進香</h4>
+
+            <p>
+              認識進香活動、徒步路程及重要文化特色。
+            </p>
+
+          </article>
+
+          <article class="unit">
+
+            <small>UNIT 03</small>
+
+            <h4>走讀在地文化</h4>
+
+            <p>
+              連結白沙屯地方景點、交通與生活文化。
+            </p>
+
+          </article>
+
         </div>
-        <p class="notice">以上單元名稱為網站初始示意，請依正式教材的課次、課文與學習目標修改。</p>
+
+        <p class="notice">
+
+          以上單元名稱為網站初始示意，請依正式教材的課次、課文與學習目標修改。
+
+        </p>
+
       </div>
+
     </section>
-    <!-- 05：文化探索，三張主題卡片。 -->
-    <section class="section" id="culture" style="background:#eee5d8"><!-- style 是只套用於本元素的行內 CSS。 -->
+
+
+    <!-- ========================================
+         HTML 06：文化探索
+         新增互動式進香文化地圖。
+         ======================================== -->
+
+    <section
+      class="section"
+      id="culture"
+      style="background:#eee5d8"
+    >
+
       <div class="container">
-        <div class="section-kicker">04 / CULTURAL EXPLORATION</div>
-        <h2 class="section-title">文化探索</h2>
-        <p class="section-lead">文化內容可依教材單元整理成主題專區，讓學習者先建立背景知識，再回到課文理解語言如何描述文化經驗。</p>
-        <div class="cards"><!-- 三張卡片共用 .card 樣式。 -->
-          <article class="card"><div class="card-media"><img src="images/culture-mazu.jpg" alt="媽祖信仰照片" onerror="this.style.display='none'"></div><div class="card-body"><span class="card-tag">BELIEF / 信仰</span><h3>媽祖信仰</h3><p>介紹媽祖信仰的文化背景、神祇形象及其在臺灣社會中的意義。</p><a class="text-link" href="#gallery">查看文化影像　↗</a></div></article>
-          <article class="card"><div class="card-media"><img src="images/culture-pilgrimage.jpg" alt="媽祖進香活動照片" onerror="this.style.display='none'"></div><div class="card-body"><span class="card-tag">PILGRIMAGE / 進香</span><h3>進香文化</h3><p>從徒步進香、香燈腳與沿途互動，認識活動中的參與方式與文化現象。</p><a class="text-link" href="#gallery">查看進香影像　↗</a></div></article>
-          <article class="card"><div class="card-media"><img src="images/culture-local.jpg" alt="白沙屯地方景觀照片" onerror="this.style.display='none'"></div><div class="card-body"><span class="card-tag">LOCAL / 在地</span><h3>白沙屯地方文化</h3><p>結合地方景點、交通與生活場景，延伸華語學習者對地方的認識。</p><a class="text-link" href="#gallery">查看地方影像　↗</a></div></article>
+
+        <div class="section-kicker">
+          04 / CULTURAL EXPLORATION
         </div>
+
+        <h2 class="section-title">
+
+          跟著媽祖踏上進香旅程
+
+        </h2>
+
+        <p class="section-lead">
+
+          點擊不同的文化節點，探索白沙屯媽祖進香文化，並認識相關的華語詞彙。
+
+        </p>
+
+
+        <!-- 互動式文化地圖容器。 -->
+        <div class="pilgrimage-map">
+
+
+          <!-- 左側文化路線節點。 -->
+          <div class="map-route">
+
+            <div class="map-route-title">
+              進香文化旅程
+            </div>
+
+            <div class="map-stops">
+
+              <!-- data-stop對應下方JavaScript資料索引。
+                   第一個節點從0開始計算。 -->
+
+              <button
+                class="map-stop active"
+                type="button"
+                data-stop="0"
+                aria-pressed="true"
+              >
+                01　白沙屯出發
+              </button>
+
+              <button
+                class="map-stop"
+                type="button"
+                data-stop="1"
+                aria-pressed="false"
+              >
+                02　不固定的路線
+              </button>
+
+              <button
+                class="map-stop"
+                type="button"
+                data-stop="2"
+                aria-pressed="false"
+              >
+                03　沿路人情味
+              </button>
+
+              <button
+                class="map-stop"
+                type="button"
+                data-stop="3"
+                aria-pressed="false"
+              >
+                04　北港進火
+              </button>
+
+              <button
+                class="map-stop"
+                type="button"
+                data-stop="4"
+                aria-pressed="false"
+              >
+                05　秋茂園換轎
+              </button>
+
+              <button
+                class="map-stop"
+                type="button"
+                data-stop="5"
+                aria-pressed="false"
+              >
+                06　回宮關爐
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- 右側文化內容展示。
+               點擊左側按鈕後，由JavaScript更新。 -->
+
+          <div
+            class="map-detail"
+            aria-live="polite"
+          >
+
+            <!-- 文化節點照片。 -->
+            <div class="map-photo-box">
+
+              <span>田野照片預留區</span>
+
+              <img
+                id="pilgrimagePhoto"
+                alt="白沙屯出發"
+                style="display:none"
+              >
+
+            </div>
+
+            <!-- 文化節點標題。 -->
+            <h3 id="pilgrimageTitle">
+              白沙屯出發
+            </h3>
+
+            <!-- 文化節點介紹。 -->
+            <p id="pilgrimageText">
+
+              從進香出發時的人潮與交通安排，認識參與進香活動前的準備。
+
+            </p>
+
+            <!-- 文化相關華語詞彙。 -->
+            <div class="map-vocabulary">
+
+              <strong>
+                華語學習詞彙
+              </strong>
+
+              <p id="pilgrimageWords">
+                接駁車、交通管制、出發
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 說明此地圖並非實際GPS路線。 -->
+        <p class="map-notice">
+
+          ※ 本圖為進香文化歷程示意，並非實際GPS行走路線。
+
+        </p>
+
+
+        <!-- 保留原本三張文化探索卡片。 -->
+        <div class="cards">
+
+
+          <!-- 文化卡片01：媽祖信仰。 -->
+          <article class="card">
+
+            <div class="card-media">
+
+              <img
+                src="images/culture-mazu.jpg"
+                alt="媽祖信仰照片"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                BELIEF / 信仰
+              </span>
+
+              <h3>媽祖信仰</h3>
+
+              <p>
+
+                介紹媽祖信仰的文化背景、神祇形象及其在臺灣社會中的意義。
+
+              </p>
+
+              <a class="text-link" href="#gallery">
+                查看文化影像　↗
+              </a>
+
+            </div>
+
+          </article>
+
+
+          <!-- 文化卡片02：進香文化。 -->
+          <article class="card">
+
+            <div class="card-media">
+
+              <img
+                src="images/culture-pilgrimage.jpg"
+                alt="媽祖進香活動照片"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                PILGRIMAGE / 進香
+              </span>
+
+              <h3>進香文化</h3>
+
+              <p>
+
+                從徒步進香、香燈腳與沿途互動，認識活動中的參與方式與文化現象。
+
+              </p>
+
+              <a class="text-link" href="#gallery">
+                查看進香影像　↗
+              </a>
+
+            </div>
+
+          </article>
+
+
+          <!-- 文化卡片03：白沙屯地方文化。 -->
+          <article class="card">
+
+            <div class="card-media">
+
+              <img
+                src="images/culture-local.jpg"
+                alt="白沙屯地方景觀照片"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            </div>
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                LOCAL / 在地
+              </span>
+
+              <h3>白沙屯地方文化</h3>
+
+              <p>
+
+                結合地方景點、交通與生活場景，延伸華語學習者對地方的認識。
+
+              </p>
+
+              <a class="text-link" href="#gallery">
+                查看地方影像　↗
+              </a>
+
+            </div>
+
+          </article>
+
+        </div>
+
       </div>
+
     </section>
-    <!-- 06：多模態學習，包含影片、媒體說明及音訊播放器。 -->
+
+
+    <!-- ========================================
+         HTML 07：多模態學習
+         影片、聲音及文字學習資源。
+         ======================================== -->
+
     <section class="section" id="multimedia">
+
       <div class="container">
-        <div class="section-kicker">05 / MULTIMODAL LEARNING</div>
-        <h2 class="section-title">讓文化被看見、聽見，也能被理解。</h2>
-        <p class="section-lead">多模態學習區整合文字、靜態影像、動態影片與聲音。建議每項媒介都搭配明確的學習任務，協助學習者從觀察進一步發展文化理解與語言表達。</p>
+
+        <div class="section-kicker">
+          05 / MULTIMODAL LEARNING
+        </div>
+
+        <h2 class="section-title">
+
+          讓文化被看見、聽見，也能被理解。
+
+        </h2>
+
+        <p class="section-lead">
+
+          多模態學習區整合文字、靜態影像、動態影片與聲音。建議每項媒介都搭配明確的學習任務，協助學習者從觀察進一步發展文化理解與語言表達。
+
+        </p>
+
+
         <div class="media-panel">
+
           <div class="media-grid">
-            <div class="video-box" id="videoBox"><!-- 若影片載入成功，JS 會把這段提示替換成 video 元素。 -->
-              <div><span class="play-symbol">▶</span><strong>進香紀錄影片</strong><p style="font-size:11px;color:#c8b7a2">將影片放入 videos/pilgrimage.mp4</p></div>
+
+            <!-- 左側影片播放區。
+                 影片成功載入後由JavaScript顯示。 -->
+
+            <div class="video-box" id="videoBox">
+
+              <div>
+
+                <span class="play-symbol">▶</span>
+
+                <strong>進香紀錄影片</strong>
+
+                <p style="font-size:11px;color:#c8b7a2">
+
+                  將影片放入 videos/pilgrimage.mp4
+
+                </p>
+
+              </div>
+
             </div>
-            <div class="media-side"><!-- 三種媒體的學習用途。 -->
-              <div class="media-tile"><div class="media-icon">▧</div><div><b>影像觀察</b><span>觀察進香隊伍、服飾、器物與場景。</span></div></div>
-              <div class="media-tile"><div class="media-icon">♫</div><div><b>聲音聆聽</b><span>搭配口述介紹、環境音或文化詞彙音檔。</span></div></div>
-              <div class="media-tile"><div class="media-icon">文</div><div><b>文本閱讀</b><span>閱讀文化說明，再以自己的話整理重點。</span></div></div>
+
+
+            <!-- 右側三種媒體介紹。 -->
+            <div class="media-side">
+
+              <div class="media-tile">
+
+                <div class="media-icon">▧</div>
+
+                <div>
+
+                  <b>影像觀察</b>
+
+                  <span>
+                    觀察進香隊伍、服飾、器物與場景。
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="media-tile">
+
+                <div class="media-icon">♫</div>
+
+                <div>
+
+                  <b>聲音聆聽</b>
+
+                  <span>
+                    搭配口述介紹、環境音或文化詞彙音檔。
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="media-tile">
+
+                <div class="media-icon">文</div>
+
+                <div>
+
+                  <b>文本閱讀</b>
+
+                  <span>
+                    閱讀文化說明，再以自己的話整理重點。
+                  </span>
+
+                </div>
+
+              </div>
+
             </div>
+
           </div>
-          <div class="notice">影片設定：將 MP4 檔案命名為 pilgrimage.mp4，放入 videos 資料夾。若使用 YouTube，請自行將下方影片區替換為官方提供的嵌入碼。</div>
-          <audio id="cultureAudio" controls style="width:100%;margin-top:22px;display:none"><!-- audio 是原生音訊播放器，預設隱藏。 -->
-            <source src="audio/culture-intro.mp3" type="audio/mpeg"><!-- 指定 MP3 檔案來源。 -->
+
+
+          <!-- 影片設定提示。 -->
+          <div class="notice">
+
+            影片設定：將MP4檔案命名為pilgrimage.mp4，放入videos資料夾。
+
+          </div>
+
+
+          <!-- 文化介紹音訊播放器。
+               預設隱藏，點擊按鈕後顯示。 -->
+
+          <audio
+            id="cultureAudio"
+            controls
+            style="width:100%;margin-top:22px;display:none"
+          >
+
+            <!-- 修改src即可更換音訊檔案。 -->
+            <source
+              src="audio/culture-intro.mp3"
+              type="audio/mpeg"
+            >
+
           </audio>
+
           <div style="margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-            <button class="btn" id="audioToggle" type="button">播放文化介紹音訊</button><!-- JS 監聽此按鈕並播放音訊。 -->
-            <span style="font-size:11px;color:var(--muted)">音檔路徑：audio/culture-intro.mp3</span>
+
+            <button
+              class="btn"
+              id="audioToggle"
+              type="button"
+            >
+              播放文化介紹音訊
+            </button>
+
+            <span style="font-size:11px;color:var(--muted)">
+
+              音檔路徑：audio/culture-intro.mp3
+
+            </span>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
-    <!-- 07：田野相簿，data-category 供 JS 篩選，data-caption 供圖片放大說明。 -->
-    <section class="section" id="gallery" style="background:#eee5d8">
+
+
+    <!-- ========================================
+         HTML 08：田野相簿
+         data-category為照片分類。
+         data-caption為照片放大後的說明。
+         ======================================== -->
+
+    <section
+      class="section"
+      id="gallery"
+      style="background:#eee5d8"
+    >
+
       <div class="container">
-        <div class="section-kicker">06 / FIELDWORK GALLERY</div>
-        <h2 class="section-title">走進現場，留下文化紀錄。</h2>
-        <p class="section-lead">這裡適合放入團隊實地踏查、進香紀錄、教材製作與教學現場的照片。點選圖片可放大瀏覽。</p>
+
+        <div class="section-kicker">
+          06 / FIELDWORK GALLERY
+        </div>
+
+        <h2 class="section-title">
+
+          走進現場，留下文化紀錄。
+
+        </h2>
+
+        <p class="section-lead">
+
+          這裡適合放入團隊實地踏查、進香紀錄、教材製作與教學現場的照片。點選圖片可放大瀏覽。
+
+        </p>
+
+
+        <!-- 照片分類工具列。 -->
         <div class="gallery-tools">
-          <div class="filter-group" aria-label="照片分類"><!-- data-filter 的值與下方照片的 data-category 相對應。 -->
-            <button class="filter-btn active" data-filter="all">全部</button>
-            <button class="filter-btn" data-filter="pilgrimage">進香紀錄</button>
-            <button class="filter-btn" data-filter="fieldwork">文化踏查</button>
-            <button class="filter-btn" data-filter="teaching">教學現場</button>
+
+          <div
+            class="filter-group"
+            aria-label="照片分類"
+          >
+
+            <button
+              class="filter-btn active"
+              data-filter="all"
+              type="button"
+            >
+              全部
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="pilgrimage"
+              type="button"
+            >
+              進香紀錄
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="fieldwork"
+              type="button"
+            >
+              文化踏查
+            </button>
+
+            <button
+              class="filter-btn"
+              data-filter="teaching"
+              type="button"
+            >
+              教學現場
+            </button>
+
           </div>
-          <span style="font-size:11px;color:var(--muted)">點選圖片可放大</span>
+
+          <span style="font-size:11px;color:var(--muted)">
+
+            點選圖片可放大
+
+          </span>
+
         </div>
-        <div class="gallery" id="galleryGrid"><!-- figure 包含照片與 figcaption 說明。 -->
-          <figure class="gallery-item" data-category="pilgrimage" data-caption="進香紀錄｜請替換為實際照片"><img src="images/gallery-01.jpg" alt="進香紀錄照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">進香紀錄 01</div><figcaption>進香紀錄・01</figcaption></figure>
-          <figure class="gallery-item" data-category="pilgrimage" data-caption="進香隊伍｜請替換為實際照片"><img src="images/gallery-02.jpg" alt="進香隊伍照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">進香紀錄 02</div><figcaption>進香隊伍・02</figcaption></figure>
-          <figure class="gallery-item" data-category="fieldwork" data-caption="白沙屯地方踏查｜請替換為實際照片"><img src="images/gallery-03.jpg" alt="白沙屯文化踏查照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">文化踏查 01</div><figcaption>文化踏查・01</figcaption></figure>
-          <figure class="gallery-item" data-category="fieldwork" data-caption="地方文化場景｜請替換為實際照片"><img src="images/gallery-04.jpg" alt="地方文化場景照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">文化踏查 02</div><figcaption>文化踏查・02</figcaption></figure>
-          <figure class="gallery-item" data-category="teaching" data-caption="教材試教｜請替換為實際照片"><img src="images/gallery-05.jpg" alt="華語教材試教照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">教學現場 01</div><figcaption>教學現場・01</figcaption></figure>
-          <figure class="gallery-item" data-category="teaching" data-caption="學習活動｜請替換為實際照片"><img src="images/gallery-06.jpg" alt="學生學習活動照片" onerror="this.style.display='none';this.parentElement.classList.add('no-image')"><div class="gallery-placeholder" style="display:none">教學現場 02</div><figcaption>教學現場・02</figcaption></figure>
+
+
+        <!-- 相簿照片容器。 -->
+        <div class="gallery" id="galleryGrid">
+
+
+          <!-- 照片01：進香紀錄。 -->
+          <figure
+            class="gallery-item"
+            data-category="pilgrimage"
+            data-caption="進香紀錄｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-01.jpg"
+              alt="進香紀錄照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              進香紀錄 01
+            </div>
+
+            <figcaption>
+              進香紀錄・01
+            </figcaption>
+
+          </figure>
+
+
+          <!-- 照片02：進香隊伍。 -->
+          <figure
+            class="gallery-item"
+            data-category="pilgrimage"
+            data-caption="進香隊伍｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-02.jpg"
+              alt="進香隊伍照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              進香紀錄 02
+            </div>
+
+            <figcaption>
+              進香隊伍・02
+            </figcaption>
+
+          </figure>
+
+
+          <!-- 照片03：文化踏查。 -->
+          <figure
+            class="gallery-item"
+            data-category="fieldwork"
+            data-caption="白沙屯地方踏查｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-03.jpg"
+              alt="白沙屯文化踏查照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              文化踏查 01
+            </div>
+
+            <figcaption>
+              文化踏查・01
+            </figcaption>
+
+          </figure>
+
+
+          <!-- 照片04：地方文化。 -->
+          <figure
+            class="gallery-item"
+            data-category="fieldwork"
+            data-caption="地方文化場景｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-04.jpg"
+              alt="地方文化場景照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              文化踏查 02
+            </div>
+
+            <figcaption>
+              文化踏查・02
+            </figcaption>
+
+          </figure>
+
+
+          <!-- 照片05：教材試教。 -->
+          <figure
+            class="gallery-item"
+            data-category="teaching"
+            data-caption="教材試教｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-05.jpg"
+              alt="華語教材試教照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              教學現場 01
+            </div>
+
+            <figcaption>
+              教學現場・01
+            </figcaption>
+
+          </figure>
+
+
+          <!-- 照片06：學生學習活動。 -->
+          <figure
+            class="gallery-item"
+            data-category="teaching"
+            data-caption="學習活動｜請替換為實際照片"
+          >
+
+            <img
+              src="images/gallery-06.jpg"
+              alt="學生學習活動照片"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+            >
+
+            <div
+              class="gallery-placeholder"
+              style="display:none"
+            >
+              教學現場 02
+            </div>
+
+            <figcaption>
+              教學現場・02
+            </figcaption>
+
+          </figure>
+
         </div>
+
       </div>
+
     </section>
-    <!-- 08：教學成果、回饋與研究反思。 -->
+
+
+    <!-- ========================================
+         HTML 09：教學成果及研究反思
+         目前內容為示意，需替換為正式成果。
+         ======================================== -->
+
     <section class="section" id="achievement">
+
       <div class="container">
-        <div class="section-kicker">07 / TEACHING & ACHIEVEMENTS</div>
-        <h2 class="section-title">從教材設計走向教學實踐。</h2>
-        <p class="section-lead">成果展示可呈現教材如何進入實際教學情境，以及學生、授課教師與團隊在試教後的觀察與修正。</p>
-        <div class="feedback-grid"><!-- 兩則示意回饋，正式展示前需替換成真實資料。 -->
-          <article class="quote"><div class="quote-mark">“</div><p>透過實際教學觀察學習者對漢字、詞彙及文化內容的理解情形，並依據學習者需求調整教材呈現方式。</p><small>教學觀察・可依實際試教紀錄補充</small></article>
-          <article class="quote"><div class="quote-mark">“</div><p>教師回饋可作為教材修正的重要參考，例如字體辨識、例句情境、文化內容融入及課堂活動安排。</p><small>教師回饋・請替換為正式回饋內容</small></article>
+
+        <div class="section-kicker">
+          07 / TEACHING & ACHIEVEMENTS
         </div>
-        <div class="cards"><!-- 三個成果展示主題。 -->
-          <article class="card"><div class="card-body"><span class="card-tag">TEACHING PRACTICE</span><h3>華語試教紀錄</h3><p>呈現教學對象、課程目標、教學流程、課堂照片與學生學習反應。</p><a class="text-link" href="#gallery">瀏覽教學照片　↗</a></div></article>
-          <article class="card"><div class="card-body"><span class="card-tag">RESEARCH OUTPUT</span><h3>研究與研討會</h3><p>整理專題論文、研究摘要、研討會發表及相關學術成果。</p><a class="text-link" href="#contact">補充研究資料　↗</a></div></article>
-          <article class="card"><div class="card-body"><span class="card-tag">REFLECTION</span><h3>製作反思</h3><p>記錄團隊合作、教材修正、教學挑戰與後續發展方向。</p><a class="text-link" href="#contact">補充專題紀錄　↗</a></div></article>
+
+        <h2 class="section-title">
+
+          從教材設計走向教學實踐。
+
+        </h2>
+
+        <p class="section-lead">
+
+          成果展示可呈現教材如何進入實際教學情境，以及學生、授課教師與團隊在試教後的觀察與修正。
+
+        </p>
+
+
+        <!-- 教學回饋示意卡片。
+             正式展示前請替換為真實資料。 -->
+
+        <div class="feedback-grid">
+
+          <article class="quote">
+
+            <div class="quote-mark">“</div>
+
+            <p>
+
+              透過實際教學觀察學習者對漢字、詞彙及文化內容的理解情形，並依據學習者需求調整教材呈現方式。
+
+            </p>
+
+            <small>
+
+              教學觀察・可依實際試教紀錄補充
+
+            </small>
+
+          </article>
+
+          <article class="quote">
+
+            <div class="quote-mark">“</div>
+
+            <p>
+
+              教師回饋可作為教材修正的重要參考，例如字體辨識、例句情境、文化內容融入及課堂活動安排。
+
+            </p>
+
+            <small>
+
+              教師回饋・請替換為正式回饋內容
+
+            </small>
+
+          </article>
+
         </div>
+
+
+        <!-- 三個成果展示主題。 -->
+        <div class="cards">
+
+          <article class="card">
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                TEACHING PRACTICE
+              </span>
+
+              <h3>華語試教紀錄</h3>
+
+              <p>
+
+                呈現教學對象、課程目標、教學流程、課堂照片與學生學習反應。
+
+              </p>
+
+              <a class="text-link" href="#gallery">
+
+                瀏覽教學照片　↗
+
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="card">
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                RESEARCH OUTPUT
+              </span>
+
+              <h3>研究與研討會</h3>
+
+              <p>
+
+                整理專題論文、研究摘要、研討會發表及相關學術成果。
+
+              </p>
+
+              <a class="text-link" href="#contact">
+
+                補充研究資料　↗
+
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="card">
+
+            <div class="card-body">
+
+              <span class="card-tag">
+                REFLECTION
+              </span>
+
+              <h3>製作反思</h3>
+
+              <p>
+
+                記錄團隊合作、教材修正、教學挑戰與後續發展方向。
+
+              </p>
+
+              <a class="text-link" href="#contact">
+
+                補充專題紀錄　↗
+
+              </a>
+
+            </div>
+
+          </article>
+
+        </div>
+
       </div>
+
     </section>
-    <!-- 09：結尾區，按鈕可返回首頁。 -->
+
+
+    <!-- ========================================
+         HTML 10：網站結尾
+         ======================================== -->
+
     <section class="cta" id="contact">
-      <h2>讓文化成為理解語言的入口。</h2>
-      <p>《跟著媽祖學華語》以臺灣在地文化為起點，持續探索文化教材、多模態學習與華語教學之間的連結。</p>
-      <a class="btn" href="#home">回到網站首頁 ↑</a>
+
+      <h2>
+
+        讓文化成為理解語言的入口。
+
+      </h2>
+
+      <p>
+
+        《跟著媽祖學華語》以臺灣在地文化為起點，持續探索文化教材、多模態學習與華語教學之間的連結。
+
+      </p>
+
+      <a class="btn" href="#home">
+
+        回到網站首頁 ↑
+
+      </a>
+
     </section>
+
   </main>
-  <footer><!-- 頁尾品牌與著作資訊。 -->
+
+
+  <!-- ========================================
+       HTML 11：網站頁尾
+       修改著作權及團隊資訊的位置。
+       ======================================== -->
+
+  <footer>
+
     <div class="footer-inner">
-      <div><strong>跟著媽祖學華語</strong><br><small>MAZU CULTURE × CHINESE LEARNING</small></div>
-      <small>專題成果展示網站｜請依實際成果補充及更新內容</small>
-      <small>© 2026 Project Showcase</small>
+
+      <div>
+
+        <strong>跟著媽祖學華語</strong>
+
+        <br>
+
+        <small>
+
+          MAZU CULTURE × CHINESE LEARNING
+
+        </small>
+
+      </div>
+
+      <small>
+
+        國立聯合大學・專題成果展示網站
+
+      </small>
+
+      <small>
+
+        © 2026 Project Showcase
+
+      </small>
+
     </div>
+
   </footer>
-  <!-- 照片放大視窗：預設隱藏，JS 加入 open 類別時顯示。 -->
-  <div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="圖片放大檢視">
-    <div class="modal-content"><button class="modal-close" id="modalClose">關閉 ✕</button><img id="modalImage" src="" alt=""><div class="modal-caption" id="modalCaption"></div></div>
+
+
+  <!-- ========================================
+       HTML 12：照片放大視窗
+       預設隱藏，由JavaScript控制。
+       ======================================== -->
+
+  <div
+    class="modal"
+    id="imageModal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="圖片放大檢視"
+  >
+
+    <div class="modal-content">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+        type="button"
+      >
+        關閉 ✕
+      </button>
+
+      <!-- 被點擊的照片會放入這個img元素。 -->
+      <img id="modalImage" alt="">
+
+      <!-- 照片放大後的說明文字。 -->
+      <div
+        class="modal-caption"
+        id="modalCaption"
+      ></div>
+
+    </div>
+
   </div>
-  <button class="back-top" id="backTop" aria-label="回到頁面頂端">↑</button><!-- 捲動後出現的回頂端按鈕。 -->
+
+
+  <!-- 返回網站頂端的按鈕。 -->
+  <button
+    class="back-top"
+    id="backTop"
+    aria-label="回到頁面頂端"
+    type="button"
+  >
+    ↑
+  </button>
+
+
+
   <script>
-    // script 是 JavaScript 程式區，負責選單、圖片、影片、音訊及捲動互動。
-    // 00 首頁圖片輪播：每五秒切換一次，也支援左右箭頭與圓點操作。
-    const heroSlides = [...document.querySelectorAll('.hero-slide')]; // 取得全部輪播照片。
-    const heroDots = document.getElementById('heroDots'); // 取得圓點按鈕容器。
-    const heroArea = document.getElementById('home'); // 取得整個主視覺區域。
-    let heroIndex = 0; // 記錄目前顯示的照片索引，從 0 開始。
-    let heroTimer; // 儲存自動輪播計時器，方便重新啟動或停止。
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; // 檢查使用者是否希望減少動畫。
+
+    /* ========================================
+       JavaScript 01：首頁照片輪播
+       每五秒切換一次照片。
+       ======================================== */
+
+    // 取得所有首頁輪播照片。
+    const heroSlides = [
+      ...document.querySelectorAll(".hero-slide")
+    ];
+
+    // 取得輪播圓點容器。
+    const heroDots =
+      document.getElementById("heroDots");
+
+    // 取得首頁主視覺區域。
+    const heroArea =
+      document.getElementById("home");
+
+    // 記錄目前照片索引，從0開始。
+    let heroIndex = 0;
+
+    // 儲存自動輪播計時器。
+    let heroTimer;
+
+    // 檢查使用者是否設定減少動畫。
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
 
     // 為每張照片建立對應的圓點按鈕。
-    heroSlides.forEach((slide, index) => {
-      const dot = document.createElement('button'); // 建立按鈕元素。
-      dot.type = 'button'; // 避免被視為表單送出按鈕。
-      dot.className = 'hero-dot'; // 套用圓點外觀。
-      dot.setAttribute('aria-label', `顯示第 ${index + 1} 張照片`); // 提供無障礙名稱。
-      dot.addEventListener('click', () => { showHeroSlide(index); restartHeroTimer(); }); // 點擊切換照片並重設倒數。
-      heroDots.appendChild(dot); // 把圓點加入網頁。
-      slide.addEventListener('error', () => { slide.style.visibility = 'hidden'; }); // 圖片缺失時不顯示破圖符號。
+    heroSlides.forEach((slide,index) => {
+
+      // 建立新的button元素。
+      const dot = document.createElement("button");
+
+      dot.type = "button";
+
+      dot.className = "hero-dot";
+
+      // 設定無障礙按鈕名稱。
+      dot.setAttribute(
+        "aria-label",
+        `顯示第 ${index + 1} 張照片`
+      );
+
+      // 點擊圓點時切換照片。
+      dot.addEventListener("click",() => {
+
+        showHeroSlide(index);
+
+        restartHeroTimer();
+
+      });
+
+      // 將圓點加入網頁。
+      heroDots.appendChild(dot);
+
+      // 圖片不存在時隱藏破圖符號。
+      slide.addEventListener("error",() => {
+
+        slide.style.visibility = "hidden";
+
+      });
+
+      // 處理已經載入失敗的圖片。
+      if (slide.complete && slide.naturalWidth === 0) {
+
+        slide.style.visibility = "hidden";
+
+      }
+
     });
-    const heroDotButtons = [...heroDots.querySelectorAll('.hero-dot')]; // 儲存圓點按鈕清單。
 
-    function showHeroSlide(index) { // 切換到指定照片。
-      heroIndex = (index + heroSlides.length) % heroSlides.length; // 使用餘數讓索引循環，不超出照片數量。
-      heroSlides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === heroIndex); // 只有目前照片具有 active 類別。
-        slide.setAttribute('aria-hidden', String(i !== heroIndex)); // 隱藏的照片不應被視為目前內容。
+
+    // 取得所有輪播圓點。
+    const heroDotButtons = [
+      ...heroDots.querySelectorAll(".hero-dot")
+    ];
+
+
+    // 切換到指定照片。
+    function showHeroSlide(index) {
+
+      // 使用餘數讓照片索引可以循環。
+      heroIndex =
+        (index + heroSlides.length) %
+        heroSlides.length;
+
+      // 只有目前照片具有active類別。
+      heroSlides.forEach((slide,i) => {
+
+        slide.classList.toggle(
+          "active",
+          i === heroIndex
+        );
+
+        slide.setAttribute(
+          "aria-hidden",
+          String(i !== heroIndex)
+        );
+
       });
-      heroDotButtons.forEach((dot, i) => {
-        dot.classList.toggle('active', i === heroIndex); // 同步更新圓點的高亮狀態。
-        dot.setAttribute('aria-current', i === heroIndex ? 'true' : 'false'); // 標記目前照片。
+
+      // 同步更新圓點的選取狀態。
+      heroDotButtons.forEach((dot,i) => {
+
+        dot.classList.toggle(
+          "active",
+          i === heroIndex
+        );
+
+        dot.setAttribute(
+          "aria-current",
+          i === heroIndex ? "true" : "false"
+        );
+
       });
+
     }
-    function stopHeroTimer() { clearInterval(heroTimer); } // 停止既有自動輪播計時器。
-    function startHeroTimer() { // 啟動每五秒切換照片。
-      if (reduceMotion || heroSlides.length < 2 || document.hidden) return; // 尊重減少動畫設定、分頁隱藏時不輪播。
-      heroTimer = setInterval(() => showHeroSlide(heroIndex + 1), 5000); // 5000 毫秒即五秒。
+
+
+    // 停止自動輪播。
+    function stopHeroTimer() {
+
+      clearInterval(heroTimer);
+
     }
-    function restartHeroTimer() { stopHeroTimer(); startHeroTimer(); } // 手動切換後重新計時。
-    document.getElementById('heroPrev').addEventListener('click', () => { showHeroSlide(heroIndex - 1); restartHeroTimer(); }); // 上一張。
-    document.getElementById('heroNext').addEventListener('click', () => { showHeroSlide(heroIndex + 1); restartHeroTimer(); }); // 下一張。
-    heroArea.addEventListener('mouseenter', stopHeroTimer); // 滑鼠停在主視覺時暫停自動切換。
-    heroArea.addEventListener('mouseleave', restartHeroTimer); // 滑鼠離開時恢復。
-    heroArea.addEventListener('focusin', stopHeroTimer); // 鍵盤操作控制項時暫停。
-    heroArea.addEventListener('focusout', () => { if (!heroArea.contains(document.activeElement)) restartHeroTimer(); }); // 焦點離開時恢復。
-    document.addEventListener('visibilitychange', restartHeroTimer); // 切換瀏覽器分頁時停止或恢復。
-    showHeroSlide(0); // 網站載入時顯示第一張照片。
-    startHeroTimer(); // 啟動自動輪播。
 
-    // 01 手機版導覽選單。
-    const menuToggle = document.getElementById('menuToggle'); // 取得 id=menuToggle 的按鈕。
-    const mainNav = document.getElementById('mainNav'); // 取得 id=mainNav 的導覽列。
-    menuToggle.addEventListener('click', () => { // 監聽按鈕的點擊事件。
-      const opened = mainNav.classList.toggle('open'); // 切換 open 類別；回傳目前是否具有該類別。
-      menuToggle.setAttribute('aria-expanded', String(opened)); // 同步更新輔助科技使用的展開狀態。
-    }); // 結束點擊事件處理函式。
-    mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { // 為導覽列每個連結加入點擊事件。
-      mainNav.classList.remove('open'); // 點擊連結後收合手機選單。
-      menuToggle.setAttribute('aria-expanded', 'false'); // 告知輔助科技選單已收合。
-    })); // 結束迴圈與事件註冊。
 
-    // 02 相簿分類篩選。
-    const filterButtons = document.querySelectorAll('.filter-btn'); // 取得所有分類按鈕（NodeList）。
-    const galleryItems = document.querySelectorAll('.gallery-item'); // 取得所有照片項目。
-    filterButtons.forEach(button => { // 逐一處理每個分類按鈕。
-      button.addEventListener('click', () => { // 使用者點擊分類按鈕時執行。
-        filterButtons.forEach(item => item.classList.remove('active')); // 先取消所有按鈕的選取狀態。
-        button.classList.add('active'); // 將被點擊的按鈕設為選取。
-        const filter = button.dataset.filter; // 讀取 HTML data-filter，例如 pilgrimage。
-        galleryItems.forEach(item => { // 逐一判斷每張照片是否符合分類。
-          item.hidden = !(filter === 'all' || item.dataset.category === filter); // 全部顯示，或僅顯示符合分類者。
-        }); // 結束照片迴圈。
-      }); // 結束點擊事件。
-    }); // 結束分類按鈕迴圈。
+    // 啟動自動輪播。
+    function startHeroTimer() {
 
-    // 03 相簿圖片放大視窗。
-    const modal = document.getElementById('imageModal'); // 取得遮罩視窗。
-    const modalImage = document.getElementById('modalImage'); // 取得放大後的圖片元素。
-    const modalCaption = document.getElementById('modalCaption'); // 取得放大圖片說明文字。
-    galleryItems.forEach(item => { // 逐一替每張照片註冊點擊事件。
-      item.addEventListener('click', () => { // 點擊照片時執行。
-        const image = item.querySelector('img'); // 找到此照片項目內的 img。
-        if (!image || image.style.display === 'none') return; // 圖片不存在或已隱藏時直接結束。
-        modalImage.src = image.src; // 把被點擊圖片的來源複製給放大圖片。
-        modalImage.alt = image.alt; // 同步替代文字。
-        modalCaption.textContent = item.dataset.caption || image.alt; // 優先使用 data-caption，否則用 alt。
-        modal.classList.add('open'); // 顯示放大視窗。
-      }); // 結束照片點擊事件。
-    }); // 結束相簿項目迴圈。
-    function closeModal() { modal.classList.remove('open'); modalImage.src = ''; } // 關閉視窗並清空圖片來源。
-    document.getElementById('modalClose').addEventListener('click', closeModal); // 點擊「關閉」按鈕。
-    modal.addEventListener('click', event => { if (event.target === modal) closeModal(); }); // 點擊圖片外的遮罩時關閉。
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); }); // 按 Esc 鍵關閉。
+      if (
+        reduceMotion ||
+        heroSlides.length < 2 ||
+        document.hidden
+      ) {
+        return;
+      }
 
-    // 04 文化介紹音訊。
-    const audio = document.getElementById('cultureAudio'); // 取得 audio 播放器。
-    document.getElementById('audioToggle').addEventListener('click', () => { // 監聽音訊播放按鈕。
-      audio.style.display = 'block'; // 將原本隱藏的播放器顯示出來。
-      audio.play().catch(() => audio.controls = true); // 嘗試播放；失敗時保留播放器控制介面。
-    }); // 結束音訊按鈕事件。
+      heroTimer = setInterval(() => {
 
-    // 05 影片載入：檔案存在時才顯示原生播放器。
-    const videoBox = document.getElementById('videoBox'); // 取得影片區塊。
-    const video = document.createElement('video'); // 在記憶體中建立 video HTML 元素。
-    video.controls = true; // 顯示播放、暫停、音量等控制功能。
-    video.preload = 'metadata'; // 優先載入影片長度、尺寸等資訊，而非整部影片。
-    video.src = 'videos/pilgrimage.mp4'; // 指定影片檔案相對路徑。
-    video.addEventListener('loadedmetadata', () => { // 影片中繼資料成功載入後執行。
-      videoBox.innerHTML = ''; // 清除原本的提示文字。
-      videoBox.appendChild(video); // 將播放器加入畫面。
-    }); // 結束影片載入事件。
-    video.addEventListener('error', () => { /* 影片不存在或載入失敗時保留原本的提示畫面。 */ }); // 監聽影片錯誤。
+        showHeroSlide(heroIndex + 1);
 
-    // 06 回到頂端按鈕。
-    const backTop = document.getElementById('backTop'); // 取得右下角回頂端按鈕。
-    window.addEventListener('scroll', () => backTop.classList.toggle('show', window.scrollY > 500)); // 捲動超過 500px 時顯示按鈕。
-    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); // 點擊後平滑捲動到頁面最上方。
+      },5000);
 
-    // 07 導覽列目前區段高亮。
-    const sections = document.querySelectorAll('main section[id]'); // 選取 main 內所有有 id 的 section。
-    const navLinks = document.querySelectorAll('.nav a'); // 選取所有導覽連結。
-    const observer = new IntersectionObserver(entries => { // 建立區段進入指定可視範圍時的觀察器。
-      entries.forEach(entry => { // 處理每個被觀察區段的狀態。
-        if (entry.isIntersecting) { // 如果該區段進入觀察範圍。
-          navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id)); // 與目前區段 id 相符的連結加上 active。
-        } // 結束條件判斷。
-      }); // 結束觀察結果迴圈。
-    }, { rootMargin: '-35% 0px -55% 0px' }); // 將有效觀察範圍縮至視窗中間約 10% 的帶狀區域。
-    sections.forEach(section => observer.observe(section)); // 開始觀察每個主要章節。
+      // 5000代表5000毫秒，也就是5秒。
+      // 想改成3秒，可以修改為3000。
 
-    // 08 相簿照片不存在時，顯示文字佔位區。
-    document.querySelectorAll('.gallery-item').forEach(item => { // 遍歷所有相簿項目。
-      const img = item.querySelector('img'); // 取得項目內圖片。
-      const placeholder = item.querySelector('.gallery-placeholder'); // 取得對應文字佔位區。
-      img.addEventListener('error', () => { placeholder.style.display = 'grid'; }); // 圖片載入失敗時顯示佔位區。
-      if (img.complete && img.naturalWidth === 0) placeholder.style.display = 'grid'; // 若在註冊事件前就已載入失敗，也顯示佔位區。
-    }); // 結束所有相簿項目處理。
+    }
+
+
+    // 重新啟動自動輪播。
+    function restartHeroTimer() {
+
+      stopHeroTimer();
+
+      startHeroTimer();
+
+    }
+
+
+    // 上一張照片按鈕。
+    document.getElementById("heroPrev")
+      .addEventListener("click",() => {
+
+        showHeroSlide(heroIndex - 1);
+
+        restartHeroTimer();
+
+      });
+
+
+    // 下一張照片按鈕。
+    document.getElementById("heroNext")
+      .addEventListener("click",() => {
+
+        showHeroSlide(heroIndex + 1);
+
+        restartHeroTimer();
+
+      });
+
+
+    // 滑鼠停在首頁時暫停輪播。
+    heroArea.addEventListener(
+      "mouseenter",
+      stopHeroTimer
+    );
+
+    // 滑鼠離開首頁時恢復輪播。
+    heroArea.addEventListener(
+      "mouseleave",
+      restartHeroTimer
+    );
+
+    // 鍵盤操作時暫停輪播。
+    heroArea.addEventListener(
+      "focusin",
+      stopHeroTimer
+    );
+
+    heroArea.addEventListener("focusout",() => {
+
+      if (!heroArea.contains(document.activeElement)) {
+
+        restartHeroTimer();
+
+      }
+
+    });
+
+    // 切換瀏覽器分頁時重新判斷輪播狀態。
+    document.addEventListener(
+      "visibilitychange",
+      restartHeroTimer
+    );
+
+    // 網站載入時顯示第一張照片。
+    showHeroSlide(0);
+
+    // 啟動自動輪播。
+    startHeroTimer();
+
+
+
+    /* ========================================
+       JavaScript 02：手機版導覽選單
+       ======================================== */
+
+    // 取得手機選單按鈕。
+    const menuToggle =
+      document.getElementById("menuToggle");
+
+    // 取得導覽列。
+    const mainNav =
+      document.getElementById("mainNav");
+
+    // 點擊按鈕後展開或收合選單。
+    menuToggle.addEventListener("click",() => {
+
+      const opened =
+        mainNav.classList.toggle("open");
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(opened)
+      );
+
+    });
+
+
+    // 點擊任何導覽連結後自動收合選單。
+    mainNav.querySelectorAll("a")
+      .forEach(link => {
+
+        link.addEventListener("click",() => {
+
+          mainNav.classList.remove("open");
+
+          menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        });
+
+      });
+
+
+
+    /* ========================================
+       JavaScript 03：製作歷程捲動動畫
+       當照片進入畫面時逐漸浮現。
+       ======================================== */
+
+    if (
+      "IntersectionObserver" in window &&
+      !reduceMotion
+    ) {
+
+      // 建立觀察器，判斷元素是否進入畫面。
+      const journeyObserver =
+        new IntersectionObserver(entries => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+              // 加入visible類別，啟動CSS動畫。
+              entry.target.classList.add("visible");
+
+              // 動畫完成後停止觀察。
+              journeyObserver.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },{
+          threshold: 0.1
+          // 元素進入畫面10%時啟動動畫。
+        });
+
+
+      // 為每個製作歷程項目加入觀察功能。
+      document.querySelectorAll(".journey-row")
+        .forEach(row => {
+
+          row.classList.add("waiting");
+
+          journeyObserver.observe(row);
+
+        });
+
+    }
+
+
+
+    /* ========================================
+       JavaScript 04：互動式進香文化地圖
+
+       重要：
+       下方是六個文化節點的資料。
+       title = 文化標題
+       image = 照片路徑
+       text  = 文化介紹
+       words = 華語學習詞彙
+
+       未來修改地圖內容時，直接修改這裡。
+       ======================================== */
+
+    const pilgrimageData = [
+
+
+      // 文化節點01：白沙屯出發。
+      {
+        title: "白沙屯出發",
+
+        image: "images/map-01.jpg",
+
+        text: "從進香出發時的人潮與交通安排，認識參與進香活動前的準備。",
+
+        words: "接駁車、交通管制、出發"
+      },
+
+
+      // 文化節點02：不固定的路線。
+      {
+        title: "不固定的路線",
+
+        image: "images/map-02.jpg",
+
+        text: "白沙屯媽祖進香的路線並不固定，參與者也可以透過GPS與直播掌握進香動態。",
+
+        words: "路線、停駕、定位"
+      },
+
+
+      // 文化節點03：沿路人情味。
+      {
+        title: "沿路人情味",
+
+        image: "images/map-03.jpg",
+
+        text: "沿途民眾提供飲水、食物、休息空間與各種協助，展現進香活動中的人情味。",
+
+        words: "熱情、補給、人情味"
+      },
+
+
+      // 文化節點04：北港進火。
+      {
+        title: "北港進火",
+
+        image: "images/map-04.jpg",
+
+        text: "透過北港進火的文化情境，認識進火儀式及香火所具有的文化意義。",
+
+        words: "進火、疏文、香火"
+      },
+
+
+      // 文化節點05：秋茂園換轎。
+      {
+        title: "秋茂園換轎",
+
+        image: "images/map-05.jpg",
+
+        text: "透過換轎的文化情境，認識白沙屯媽祖與山邊媽祖進香活動中的特色。",
+
+        words: "神轎、換轎、儀式"
+      },
+
+
+      // 文化節點06：回宮關爐。
+      {
+        title: "回宮關爐",
+
+        image: "images/map-06.jpg",
+
+        text: "從媽祖回宮及關爐儀式，認識進香活動結束後的文化歷程。",
+
+        words: "回宮、關爐、信徒"
+      }
+
+    ];
+
+
+    // 取得全部文化地圖按鈕。
+    const mapButtons =
+      document.querySelectorAll(".map-stop");
+
+
+    // 切換指定的文化節點。
+    function selectPilgrimageStop(index) {
+
+      // 取得對應的文化資料。
+      const item = pilgrimageData[index];
+
+      if (!item) return;
+
+
+      // 更新文化標題。
+      document.getElementById("pilgrimageTitle")
+        .textContent = item.title;
+
+
+      // 更新文化介紹。
+      document.getElementById("pilgrimageText")
+        .textContent = item.text;
+
+
+      // 更新華語詞彙。
+      document.getElementById("pilgrimageWords")
+        .textContent = item.words;
+
+
+      // 取得文化照片元素。
+      const photo =
+        document.getElementById("pilgrimagePhoto");
+
+      // 新照片載入前先隱藏。
+      photo.style.display = "none";
+
+      // 更新圖片替代文字。
+      photo.alt = item.title;
+
+      // 圖片成功載入後顯示。
+      photo.onload = function() {
+
+        photo.style.display = "block";
+
+      };
+
+      // 圖片不存在時保留預留畫面。
+      photo.onerror = function() {
+
+        photo.style.display = "none";
+
+      };
+
+      // 更換文化照片路徑。
+      photo.src = item.image;
+
+
+      // 更新文化按鈕的選取狀態。
+      mapButtons.forEach((button,i) => {
+
+        button.classList.toggle(
+          "active",
+          i === index
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(i === index)
+        );
+
+      });
+
+    }
+
+
+    // 為每個文化節點加入點擊功能。
+    mapButtons.forEach(button => {
+
+      button.addEventListener("click",() => {
+
+        // 讀取HTML中的data-stop數值。
+        const index =
+          Number(button.dataset.stop);
+
+        // 顯示對應文化內容。
+        selectPilgrimageStop(index);
+
+      });
+
+    });
+
+
+    // 網站載入時預設顯示第一個文化節點。
+    selectPilgrimageStop(0);
+
+
+
+    /* ========================================
+       JavaScript 05：相簿分類篩選
+       ======================================== */
+
+    // 取得所有照片分類按鈕。
+    const filterButtons =
+      document.querySelectorAll(".filter-btn");
+
+    // 取得所有相簿照片。
+    const galleryItems =
+      document.querySelectorAll(".gallery-item");
+
+
+    // 為每個分類按鈕加入點擊功能。
+    filterButtons.forEach(button => {
+
+      button.addEventListener("click",() => {
+
+        // 取消其他按鈕的選取狀態。
+        filterButtons.forEach(item => {
+
+          item.classList.remove("active");
+
+        });
+
+        // 將目前按鈕設為選取。
+        button.classList.add("active");
+
+        // 讀取按鈕的data-filter分類。
+        const filter = button.dataset.filter;
+
+
+        // 判斷照片是否符合目前分類。
+        galleryItems.forEach(item => {
+
+          item.hidden = !(
+            filter === "all" ||
+            item.dataset.category === filter
+          );
+
+        });
+
+      });
+
+    });
+
+
+
+    /* ========================================
+       JavaScript 06：相簿照片放大功能
+       ======================================== */
+
+    // 取得照片放大視窗。
+    const modal =
+      document.getElementById("imageModal");
+
+    // 取得放大照片元素。
+    const modalImage =
+      document.getElementById("modalImage");
+
+    // 取得照片說明元素。
+    const modalCaption =
+      document.getElementById("modalCaption");
+
+
+    // 為每張照片加入點擊功能。
+    galleryItems.forEach(item => {
+
+      item.addEventListener("click",() => {
+
+        const image =
+          item.querySelector("img");
+
+        // 圖片不存在或載入失敗時不開啟。
+        if (
+          !image ||
+          image.style.display === "none" ||
+          image.naturalWidth === 0
+        ) {
+          return;
+        }
+
+        // 將被點擊的照片放入放大視窗。
+        modalImage.src = image.src;
+
+        modalImage.alt = image.alt;
+
+        // 顯示照片說明。
+        modalCaption.textContent =
+          item.dataset.caption || image.alt;
+
+        // 開啟照片放大視窗。
+        modal.classList.add("open");
+
+      });
+
+    });
+
+
+    // 關閉照片放大視窗。
+    function closeModal() {
+
+      modal.classList.remove("open");
+
+      modalImage.removeAttribute("src");
+
+    }
+
+
+    // 點擊關閉按鈕。
+    document.getElementById("modalClose")
+      .addEventListener("click",closeModal);
+
+
+    // 點擊照片外側的黑色背景時關閉。
+    modal.addEventListener("click",event => {
+
+      if (event.target === modal) {
+
+        closeModal();
+
+      }
+
+    });
+
+
+    // 按下Esc鍵時關閉照片。
+    document.addEventListener("keydown",event => {
+
+      if (event.key === "Escape") {
+
+        closeModal();
+
+      }
+
+    });
+
+
+
+    /* ========================================
+       JavaScript 07：文化介紹音訊
+       ======================================== */
+
+    // 取得音訊播放器。
+    const audio =
+      document.getElementById("cultureAudio");
+
+
+    // 點擊播放按鈕後顯示播放器。
+    document.getElementById("audioToggle")
+      .addEventListener("click",() => {
+
+        audio.style.display = "block";
+
+        // 嘗試播放音訊。
+        audio.play().catch(() => {
+
+          audio.controls = true;
+
+        });
+
+      });
+
+
+
+    /* ========================================
+       JavaScript 08：影片載入功能
+       修改video.src即可更換影片。
+       ======================================== */
+
+    // 取得影片展示區。
+    const videoBox =
+      document.getElementById("videoBox");
+
+    // 建立HTML影片元素。
+    const video =
+      document.createElement("video");
+
+    // 顯示播放、暫停及音量控制。
+    video.controls = true;
+
+    // 優先載入影片基本資訊。
+    video.preload = "metadata";
+
+    // 影片檔案路徑。
+    video.src = "videos/pilgrimage.mp4";
+
+
+    // 影片成功載入後顯示播放器。
+    video.addEventListener("loadedmetadata",() => {
+
+      // 清除原本的影片提示文字。
+      videoBox.innerHTML = "";
+
+      // 將影片播放器加入畫面。
+      videoBox.appendChild(video);
+
+    });
+
+
+    // 影片不存在時保留原本提示畫面。
+    video.addEventListener("error",() => {
+
+      // 不需要替換畫面。
+
+    });
+
+
+
+    /* ========================================
+       JavaScript 09：返回網站頂端
+       ======================================== */
+
+    // 取得返回頂端按鈕。
+    const backTop =
+      document.getElementById("backTop");
+
+
+    // 捲動超過500px後顯示按鈕。
+    window.addEventListener("scroll",() => {
+
+      backTop.classList.toggle(
+        "show",
+        window.scrollY > 500
+      );
+
+    });
+
+
+    // 點擊後返回網頁最上方。
+    backTop.addEventListener("click",() => {
+
+      window.scrollTo({
+
+        top: 0,
+
+        behavior: reduceMotion ? "auto" : "smooth"
+
+      });
+
+    });
+
+
+
+    /* ========================================
+       JavaScript 10：導覽列章節高亮
+       捲動至不同章節時改變導覽文字顏色。
+       ======================================== */
+
+    // 取得所有具有id的主要章節。
+    const sections =
+      document.querySelectorAll("main section[id]");
+
+    // 取得所有導覽連結。
+    const navLinks =
+      document.querySelectorAll(".nav a");
+
+
+    if ("IntersectionObserver" in window) {
+
+      // 建立章節觀察器。
+      const observer =
+        new IntersectionObserver(entries => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+              navLinks.forEach(link => {
+
+                // 將目前章節對應的連結設為active。
+                link.classList.toggle(
+
+                  "active",
+
+                  link.getAttribute("href") ===
+                  "#" + entry.target.id
+
+                );
+
+              });
+
+            }
+
+          });
+
+        },{
+          rootMargin: "-35% 0px -55% 0px"
+        });
+
+
+      // 開始觀察所有主要章節。
+      sections.forEach(section => {
+
+        observer.observe(section);
+
+      });
+
+    }
+
   </script>
+
 </body>
+
 </html>
